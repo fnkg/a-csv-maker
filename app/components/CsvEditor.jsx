@@ -176,7 +176,7 @@ const CsvEditor = () => {
   return (
     <div className="p-10 bg-[#f0f1f5]">
 
-      <h1 className="text-2xl font-semibold mb-4 text-gray-800">Редактор CSV</h1>
+      <h1 className="text-2xl font-semibold mb-4 text-gray-800">Редактор CSV v0.1.0</h1>
       {error && <h3 className="text-red-500 text-xs mt-1">{error}</h3>}
 
       <form className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-4">
