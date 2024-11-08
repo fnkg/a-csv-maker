@@ -1,0 +1,19 @@
+# dependencies
+/node_modules
+
+# next.js
+.next/
+
+#
+.eslintrc.json
+.env
+.env.local
+.vscode
+
+# production
+/build
+
+
+# drafts
+/app/components/MenuList.jsx
+/app/components/SimpleSelect.jsx

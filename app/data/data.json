@@ -1,0 +1,76 @@
+{
+    "clinicLegalEntities": [
+        {
+            "legal_id": "2ac2fc9b-679c-4d8e-a134-f37fce839ecf",
+            "name": "ООО Чайка Москва-Сити"
+        },
+        {
+            "legal_id": "d0c4cfc9-ca62-430e-82c5-08f7137b483c",
+            "name": "ООО Чайка Метрополис"
+        },
+        {
+            "legal_id": "6e6829a7-1822-490a-a3be-3ffc99c6dae3",
+            "name": "ООО Чайка Кунцево"
+        },
+        {
+            "legal_id": "2b52b862-268a-438f-b643-9acc1529cab0",
+            "name": "ООО Чайка Новая Рига"
+        },
+        {
+            "legal_id": "f637b372-d736-406e-a34c-bdb52cd83d3b",
+            "name": "ООО Чайка университет"
+        },
+        {
+            "legal_id": "764370ae-cafa-416c-9f05-ddc452f3a154",
+            "name": "ООО Клиника Чайка Тбилиси"
+        },
+        {
+            "legal_id": "99563e0e-4533-43d7-a1aa-3ae6dfb1ecb9",
+            "name": "ООО Чайка"
+        },
+        {
+            "legal_id": "986fe69d-9763-48d9-9d36-22dd47e0daf9",
+            "name": "Kandinsky Clinic"
+        }
+    ],
+    "organizations": [
+        {
+            "organization_id": "917110f2-402d-4bdd-b52f-591d0204b3da",
+            "name": "Клиника в Москва-Сити"
+        },
+        {
+            "organization_id": "c9af93ca-e6b6-4a77-a2d0-e70e2971da56",
+            "name": "Клиника в Метрополисе"
+        },
+        {
+            "organization_id": "1d1d562c-79e4-4f89-8d43-93539819125a",
+            "name": "Клиника Кунцево Плаза"
+        },
+        {
+            "organization_id": "899ca606-67cd-4f10-944f-f76ca812e496",
+            "name": "Клиника в RigaLand"
+        },
+        {
+            "organization_id": "b8b5b862-8aa1-490b-a749-408180d17e19",
+            "name": "Клиника на Университете"
+        },
+        {
+            "organization_id": "982f5d4e-4b85-47c9-b083-5eb4e4ced41d",
+            "name": "Клиника Тбилиси"
+        },
+        {
+            "organization_id": "9868b18f-20e7-429d-8324-7cc9c71d62d1",
+            "name": "Клиника Чайка Армения"
+        },
+        {
+            "organization_id": "92d182cc-40b7-4128-b5f9-968e08da8c8c",
+            "name": "Kandinsky Clinic"
+        }
+    ],
+    "currencies": [
+        "RUB",
+        "GEL",
+        "AED",
+        "AMD"
+    ]
+}
