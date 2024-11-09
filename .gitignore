@@ -15,6 +15,6 @@
 
 
 # drafts
-/app/components/MenuList.jsx
-/app/components/SimpleSelect.jsx
+/components/MenuList.jsx
+/components/SimpleSelect.jsx
 .temp/
