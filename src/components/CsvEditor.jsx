@@ -157,8 +157,8 @@ const CsvEditor = () => {
         <BasicSelect
           options={currencyOptions}
           onChange={(option) => handleSelectChange(option, 'currency')}
-          value={{ value: newRow.currency, label: newRow.currency }}
-          placeholder="Выберите валюту"
+          value={newRow.currency ? { value: newRow.currency, label: newRow.currency } : null}
+          placeholder="Валюта"
         />
 
         <DatePickerInput
