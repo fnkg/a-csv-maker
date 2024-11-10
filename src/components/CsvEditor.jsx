@@ -1,20 +1,29 @@
 'use client'
 
 import React, { useState } from 'react';
-import { useOptions } from '../hooks/useOptions';
+import {
+  loadOptions,
+  loadFormattedOptions,
+  useOptions
+} from '../hooks/useOptions';
 
-import SelectInput from './SelectInput';
+import VirtualizedSelect from './VirtualizedSelect';
+import BasicSelect from './BasicSelect';
+
 import DatePickerInput from './DatePickerInput';
 import NumberInput from './NumberInput';
 
-import { formatDateToLocal, downloadCsv } from '@/src/utils/utils'
+import {
+  formatDoctorLabel,
+  formatServiceLabel,
+  formatDateToLocal,
+  downloadCsv
+} from '@/src/utils/utils'
 
 import services from '@/src/data/services.json';
 import doctors from '@/src/data/doctors';
 import payers from '@/src/data/payers';
 import data from '@/src/data/data';
-
-// console.log('%c There are elements in payers', 'color:lime;background:black;', payers.insuranceCompanies)
 
 
 const CsvEditor = () => {
@@ -26,14 +35,14 @@ const CsvEditor = () => {
     legal_id: '',
     user_id: '',
     organization_id: '',
-    maxAmou23ntToPay: '',
+    maxAmountToPay: '',
     currency: 'RUB',
     scheduledOn: new Date()
   });
 
   const [error, setError] = useState('');
 
-  const { payerOptions, serviceOptions, clinicLegalEntityOptions, doctorOptions, organizationOptions, currencyOptions } = useOptions(services, payers, doctors, data);
+  const { clinicLegalEntityOptions, organizationOptions, currencyOptions } = useOptions(data);
 
   const handleSelectChange = (selectedOption, fieldName) => {
     setNewRow({ ...newRow, [fieldName]: selectedOption ? selectedOption.value : '' });
@@ -79,42 +88,39 @@ const CsvEditor = () => {
       {/* Отображение ошибок */}
       {error && <h3 className="text-red-500 text-xs mb-4 absolute top-7 left-21">{error}</h3>}
 
-      {/* testing zone */}
-
-
       {/* Шаблонная форма для заполнения строки */}
       <form className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-        <SelectInput
-          options={payerOptions}
+        <VirtualizedSelect
+          loadOptions={loadOptions(payers.insuranceCompanies, 'name', 'legal_entity_id')}
           onChange={(option) => handleSelectChange(option, 'legal_entity_id')}
           placeholder="Плательщик"
         />
 
-        <SelectInput
+        <VirtualizedSelect
           isDisabled={true}
           value={{ value: ',', label: 'contract_id' }}
           placeholder="Contract ID (пустое значение)"
           isSearchable={false}
         />
 
-        <SelectInput
-          options={serviceOptions}
+        <VirtualizedSelect
+          loadOptions={loadFormattedOptions(services.services, formatServiceLabel, 'code')}
           onChange={(option) => handleSelectChange(option, 'code')}
           placeholder="Услуга"
         />
 
-        <SelectInput
+        <BasicSelect
           options={clinicLegalEntityOptions}
           onChange={(option) => handleSelectChange(option, 'legal_id')}
           placeholder="Юридическое лицо клиники" />
 
-        <SelectInput
-          options={doctorOptions}
+        <VirtualizedSelect
+          loadOptions={loadFormattedOptions(doctors.doctors, formatDoctorLabel, 'user_id')}
           onChange={(option) => handleSelectChange(option, 'user_id')}
           placeholder="Доктор"
         />
 
-        <SelectInput
+        <BasicSelect
           options={organizationOptions}
           onChange={(option) => handleSelectChange(option, 'organization_id')}
           placeholder="Клиника"
@@ -126,10 +132,10 @@ const CsvEditor = () => {
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
           placeholder="Макс. сумма к оплате"
-          className="p-2 border rounded-[12px] min-h-[40px]"
+          className="number-input"
         />
 
-        <SelectInput
+        <BasicSelect
           options={currencyOptions}
           onChange={(option) => handleSelectChange(option, 'currency')}
           value={{ value: newRow.currency, label: newRow.currency }}
@@ -144,8 +150,8 @@ const CsvEditor = () => {
 
       {/* Кнопки */}
       <div className="flex justify-end mt-8">
-        <button onClick={addRow} className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700">Добавить строку</button>
-        <button onClick={handleDownload} className="bg-green-600 text-white p-2 rounded hover:bg-green-700 ml-2">Скачать CSV</button>
+        <button onClick={addRow} className="min-h-[40px] p-[12px] rounded-[12px] text-white bg-[#0354f1] hover:bg-[#1e5dd9]">Добавить строку</button>
+        <button onClick={handleDownload} className="min-h-[40px] p-[12px] rounded-[12px] text-white bg-green-600 hover:bg-green-700 ml-2">Скачать CSV</button>
       </div>
 
       {/* Отображение всех строк */}

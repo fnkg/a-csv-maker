@@ -5,6 +5,10 @@
             "name": "ООО Чайка Москва-Сити"
         },
         {
+            "legal_id": "c38ece42-413f-4a31-b5e5-38f9e9a26a8a",
+            "name": "ООО Чайка Белые Сады"
+        },
+        {
             "legal_id": "d0c4cfc9-ca62-430e-82c5-08f7137b483c",
             "name": "ООО Чайка Метрополис"
         },
@@ -37,6 +41,10 @@
         {
             "organization_id": "917110f2-402d-4bdd-b52f-591d0204b3da",
             "name": "Клиника в Москва-Сити"
+        },
+        {
+            "organization_id": "7fe8f64a-4eba-433e-a6ac-07bab7780c01",
+            "name": "Клиника в Белых садах"
         },
         {
             "organization_id": "c9af93ca-e6b6-4a77-a2d0-e70e2971da56",

@@ -1,5 +1,14 @@
 import Papa from 'papaparse';
 
+const formatDoctorLabel = (doctor) => {
+  return `${doctor.last_name} ${doctor.first_name} ${doctor.patronymic ? `${doctor.patronymic}` : ''}`;
+};
+
+const formatServiceLabel = (service) => {
+  const truncatedName = service.name.length > 50 ? `${service.name.substring(0, 100)}...` : service.name;
+  return `${truncatedName} (code: ${service.code})`;
+};
+
 const formatDateToLocal = (date) => {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -24,6 +33,8 @@ const downloadCsv = (rows) => {
 };
 
 export {
+  formatDoctorLabel,
+  formatServiceLabel,
   formatDateToLocal,
   downloadCsv
 }

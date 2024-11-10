@@ -1,36 +1,42 @@
-import {
-  useMemo
-} from 'react';
+import { useMemo } from 'react';
+import { debounce } from 'lodash';
 
-export const useOptions = (services, payers, doctors, data) => {
-  const payerOptions = useMemo(() => {
-    return payers.insuranceCompanies.map(payer => ({
-      value: payer.legal_entity_id,
-      label: payer.name
-    }));
-  }, [payers]);
+const loadOptions = (data, labelKey, valueKey) => {
+  const debouncedLoad = debounce((inputValue, callback) => {
+    const filteredOptions = data
+      .filter(item => item[labelKey].toLowerCase().includes(inputValue.toLowerCase()))
+      .map(item => ({
+        value: item[valueKey],
+        label: item[labelKey],
+      }));
+    callback(filteredOptions);
+  }, 300);
 
-  const serviceOptions = useMemo(() => {
-    return services.services.map(service => ({
-      value: service.code,
-      label: `${service.name} (code: ${service.code})`,
-      code: service.code
-    }));
-  }, [services]);
+  return debouncedLoad;
+};
 
+const loadFormattedOptions = (data, labelKeyFormatter, valueKey) => {
+  const debouncedLoad = debounce((inputValue, callback) => {
+    console.log('Data:', data); // Логирование для проверки вызовов
+    const filteredOptions = data
+      .filter(item => labelKeyFormatter(item).toLowerCase().includes(inputValue.toLowerCase()))
+      .map(item => ({
+        value: item[valueKey],
+        label: labelKeyFormatter(item),
+      }));
+    callback(filteredOptions);
+  }, 300);
+
+  return debouncedLoad;
+};
+
+const useOptions = (data) => {
   const clinicLegalEntityOptions = useMemo(() => {
     return data.clinicLegalEntities.map(entity => ({
       value: entity.legal_id,
       label: entity.name
     }));
   }, [data]);
-
-  const doctorOptions = useMemo(() => {
-    return doctors.doctors.map(doctor => ({
-      value: doctor.user_id,
-      label: `${doctor.last_name} ${doctor.first_name} ${doctor.patronymic}`
-    }));
-  }, [doctors]);
 
   const organizationOptions = useMemo(() => {
     return data.organizations.map(org => ({
@@ -47,11 +53,14 @@ export const useOptions = (services, payers, doctors, data) => {
   }, [data]);
 
   return {
-    payerOptions,
-    serviceOptions,
     clinicLegalEntityOptions,
-    doctorOptions,
     organizationOptions,
     currencyOptions
   };
 };
+
+export {
+  loadOptions,
+  loadFormattedOptions,
+  useOptions
+}
