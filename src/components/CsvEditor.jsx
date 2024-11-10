@@ -1,15 +1,21 @@
 'use client'
 
 import React, { useState } from 'react';
-import Papa from 'papaparse';
+import { useOptions } from '../hooks/useOptions';
+
 import SelectInput from './SelectInput';
 import DatePickerInput from './DatePickerInput';
 import NumberInput from './NumberInput';
-import { useOptions } from '@/hooks/useOptions';
-import services from '@/data/services.json';
-import doctors from '@/data/doctors.json';
-import payers from '@/data/payers.json';
-import data from '@/data/data.json';
+
+import { formatDateToLocal, downloadCsv } from '@/src/utils/utils'
+
+import services from '@/src/data/services.json';
+import doctors from '@/src/data/doctors';
+import payers from '@/src/data/payers';
+import data from '@/src/data/data';
+
+// console.log('%c There are elements in payers', 'color:lime;background:black;', payers.insuranceCompanies)
+
 
 const CsvEditor = () => {
   const [rows, setRows] = useState([]);
@@ -20,7 +26,7 @@ const CsvEditor = () => {
     legal_id: '',
     user_id: '',
     organization_id: '',
-    maxAmountToPay: '',
+    maxAmou23ntToPay: '',
     currency: 'RUB',
     scheduledOn: new Date()
   });
@@ -48,11 +54,8 @@ const CsvEditor = () => {
     }
   };
 
-  const formatDateToLocal = (date) => {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
+  const handleDownload = () => {
+    downloadCsv(rows);
   };
 
   const addRow = () => {
@@ -71,54 +74,84 @@ const CsvEditor = () => {
     ]);
   };
 
-  const downloadCsv = () => {
-    const csv = Papa.unparse(rows, { header: false });
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', 'edited_data.csv');
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
   return (
     <div className="p-8">
       {/* Отображение ошибок */}
       {error && <h3 className="text-red-500 text-xs mb-4 absolute top-7 left-21">{error}</h3>}
 
+      {/* testing zone */}
+
+
       {/* Шаблонная форма для заполнения строки */}
       <form className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-        <SelectInput options={payerOptions} onChange={(option) => handleSelectChange(option, 'legal_entity_id')} placeholder="Плательщик" />
+        <SelectInput
+          options={payerOptions}
+          onChange={(option) => handleSelectChange(option, 'legal_entity_id')}
+          placeholder="Плательщик"
+        />
 
-        <SelectInput isDisabled={true} value={{ value: ',', label: 'contract_id' }} placeholder="Contract ID (пустое значение)" isSearchable={false} />
+        <SelectInput
+          isDisabled={true}
+          value={{ value: ',', label: 'contract_id' }}
+          placeholder="Contract ID (пустое значение)"
+          isSearchable={false}
+        />
 
-        <SelectInput options={serviceOptions} onChange={(option) => handleSelectChange(option, 'code')} placeholder="Услуга" />
+        <SelectInput
+          options={serviceOptions}
+          onChange={(option) => handleSelectChange(option, 'code')}
+          placeholder="Услуга"
+        />
 
-        <SelectInput options={clinicLegalEntityOptions} onChange={(option) => handleSelectChange(option, 'legal_id')} placeholder="Юридическое лицо клиники" />
+        <SelectInput
+          options={clinicLegalEntityOptions}
+          onChange={(option) => handleSelectChange(option, 'legal_id')}
+          placeholder="Юридическое лицо клиники" />
 
-        <SelectInput options={doctorOptions} onChange={(option) => handleSelectChange(option, 'user_id')} placeholder="Доктор" />
+        <SelectInput
+          options={doctorOptions}
+          onChange={(option) => handleSelectChange(option, 'user_id')}
+          placeholder="Доктор"
+        />
 
-        <SelectInput options={organizationOptions} onChange={(option) => handleSelectChange(option, 'organization_id')} placeholder="Клиника" />
+        <SelectInput
+          options={organizationOptions}
+          onChange={(option) => handleSelectChange(option, 'organization_id')}
+          placeholder="Клиника"
+        />
 
-        <NumberInput name="maxAmountToPay" value={newRow.maxAmountToPay} onChange={handleInputChange} onKeyDown={handleKeyDown} placeholder="Макс. сумма к оплате" className="p-2 border rounded-[12px] min-h-[40px]" />
+        <NumberInput
+          name="maxAmountToPay"
+          value={newRow.maxAmountToPay}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
+          placeholder="Макс. сумма к оплате"
+          className="p-2 border rounded-[12px] min-h-[40px]"
+        />
 
-        <SelectInput options={currencyOptions} onChange={(option) => handleSelectChange(option, 'currency')} value={{ value: newRow.currency, label: newRow.currency }} placeholder="Выберите валюту" />
+        <SelectInput
+          options={currencyOptions}
+          onChange={(option) => handleSelectChange(option, 'currency')}
+          value={{ value: newRow.currency, label: newRow.currency }}
+          placeholder="Выберите валюту"
+        />
 
-        <DatePickerInput selected={newRow.scheduledOn} onChange={handleDateChange} />
+        <DatePickerInput
+          selected={newRow.scheduledOn}
+          onChange={handleDateChange}
+        />
       </form>
 
       {/* Кнопки */}
       <div className="flex justify-end mt-8">
         <button onClick={addRow} className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700">Добавить строку</button>
-        <button onClick={downloadCsv} className="bg-green-600 text-white p-2 rounded hover:bg-green-700 ml-2">Скачать CSV</button>
+        <button onClick={handleDownload} className="bg-green-600 text-white p-2 rounded hover:bg-green-700 ml-2">Скачать CSV</button>
       </div>
 
       {/* Отображение всех строк */}
-      <div className="mt-8 overflow-x-auto">
-        <h2 className="text-xl font-semibold mb-4 text-gray-800">Текущие строки</h2>
-        <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
+      <h2 className="text-xl font-semibold mt-4 mb-4 text-gray-800">Текущие строки</h2>
+      <div className=" overflow-x-auto max-h-[500px]">
+        <table className="min-w-full  bg-white border border-gray-300 rounded-lg shadow-md">
           <thead>
             <tr className="bg-gray-50 text-gray-600 text-base leading-normal">
               <th className="p-3 border text-left">Payer Legal Entity ID</th>

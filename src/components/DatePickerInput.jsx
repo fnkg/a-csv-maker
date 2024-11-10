@@ -11,13 +11,13 @@ const DatePickerInput = ({ selected, onChange }) => {
       className="p-[10px] min-h-[40px] border border-gray-300 rounded-[12px] w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
       calendarClassName="shadow-lg border border-gray-300"
       popperPlacement="bottom-end" // Расположение выпадающего календаря
-      showYearDropdown
-      dropdownMode="select"
-      showMonthDropdown
-      useShortMonthInDropdown
       placeholderText="Укажите дату начала действия"
-      // withPortal
-      // fixedHeight
+      // showYearDropdown
+      // dropdownMode="select"
+      // showMonthDropdown
+      // useShortMonthInDropdown
+    // withPortal
+    // fixedHeight
     />
   );
 };

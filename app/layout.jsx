@@ -1,6 +1,5 @@
-import '@/styles/global.css'
+import '@/src/styles/global.css'
 import { Roboto } from 'next/font/google'
-import Head from 'next/head'
 
 export const metadata = {
   title: 'CSV Editor',
@@ -11,10 +10,7 @@ export const roboto = Roboto({ subsets: ['latin'], weight: ['100', '300', '400',
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <Head>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <html lang="ru">
       <body className={`${roboto.className} antialiased bg-[#272B37] h-screen pt-6 pb-6`}>
         {children}
       </body>

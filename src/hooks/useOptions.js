@@ -1,4 +1,6 @@
-import { useMemo } from 'react';
+import {
+  useMemo
+} from 'react';
 
 export const useOptions = (services, payers, doctors, data) => {
   const payerOptions = useMemo(() => {
@@ -44,5 +46,12 @@ export const useOptions = (services, payers, doctors, data) => {
     }));
   }, [data]);
 
-  return { payerOptions, serviceOptions, clinicLegalEntityOptions, doctorOptions, organizationOptions, currencyOptions };
+  return {
+    payerOptions,
+    serviceOptions,
+    clinicLegalEntityOptions,
+    doctorOptions,
+    organizationOptions,
+    currencyOptions
+  };
 };

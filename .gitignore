@@ -13,8 +13,5 @@
 # production
 /build
 
-
 # drafts
-/components/MenuList.jsx
-/components/SimpleSelect.jsx
 .temp/

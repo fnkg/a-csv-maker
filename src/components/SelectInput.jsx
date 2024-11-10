@@ -1,6 +1,8 @@
 import React from 'react';
 import Select from 'react-select';
-import Async from "react-select/async";
+// import AsyncSelect from "react-select/async";
+// import ReactSelect, { createFilter } from 'react-select';
+
 
 const customStyles = {
   menu: (base) => ({
@@ -14,6 +16,7 @@ const customStyles = {
     '::-webkit-scrollbar': {
       width: '12px',
       height: '12px',
+      zIndex: '-1'
     },
     '::-webkit-scrollbar-track': {
       background: 'tranparent',
@@ -85,8 +88,9 @@ const customStyles = {
   }),
 };
 
-
 const SelectInput = ({ options, onChange, value, placeholder, isDisabled = false, isClearable = true, className = '' }) => {
+  console.log('%c There are elements in options.', 'color:lime;background:black;', options)
+
   return (
     <Select
       options={options}
