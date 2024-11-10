@@ -37,7 +37,7 @@ const CsvEditor = () => {
     organization_id: '',
     maxAmountToPay: '',
     currency: 'RUB',
-    scheduledOn: new Date()
+    scheduledOn: ''
   });
 
   const [error, setError] = useState('');
@@ -81,6 +81,25 @@ const CsvEditor = () => {
         scheduledOn: formatDateToLocal(newRow.scheduledOn)
       }
     ]);
+
+    // Сброс ошибки после успешного добавления
+    setError('');
+  };
+
+  const handleClearAll = () => {
+    setRows([]); // Очистка массива строк
+    setNewRow({ // Сброс состояния для новой строки
+      legal_entity_id: '',
+      contract_id: '',
+      code: '',
+      legal_id: '',
+      user_id: '',
+      organization_id: '',
+      maxAmountToPay: '',
+      currency: 'RUB',
+      scheduledOn: '',
+    });
+    setError(''); // Очистка сообщений об ошибках
   };
 
   return (
@@ -96,7 +115,7 @@ const CsvEditor = () => {
           placeholder="Плательщик"
         />
 
-        <VirtualizedSelect
+        <BasicSelect
           isDisabled={true}
           value={{ value: ',', label: 'contract_id' }}
           placeholder="Contract ID (пустое значение)"
@@ -151,12 +170,13 @@ const CsvEditor = () => {
       {/* Кнопки */}
       <div className="flex justify-end mt-8">
         <button onClick={addRow} className="min-h-[40px] p-[12px] rounded-[12px] text-white bg-[#0354f1] hover:bg-[#1e5dd9]">Добавить строку</button>
+        <button onClick={handleClearAll} className="min-h-[40px] p-[12px] rounded-[12px] text-white bg-red-600 hover:bg-red-700 ml-2">Очистить таблицу</button>
         <button onClick={handleDownload} className="min-h-[40px] p-[12px] rounded-[12px] text-white bg-green-600 hover:bg-green-700 ml-2">Скачать CSV</button>
       </div>
 
       {/* Отображение всех строк */}
       <h2 className="text-xl font-semibold mt-4 mb-4 text-gray-800">Текущие строки</h2>
-      <div className=" overflow-x-auto max-h-[500px]">
+      <div className=" overflow-x-auto max-h-[450px]">
         <table className="min-w-full  bg-white border border-gray-300 rounded-lg shadow-md">
           <thead>
             <tr className="bg-gray-50 text-gray-600 text-base leading-normal">

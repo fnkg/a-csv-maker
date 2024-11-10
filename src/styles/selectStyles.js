@@ -60,10 +60,9 @@ export const selectStyles = {
       ...defaultStyles,
       color: '#9ca3af', // серый текст плейсхолдера
     }),
-  
-    dropdownIndicator: (defaultStyles, state) => ({
+
+    dropdownIndicator: (defaultStyles) => ({
       ...defaultStyles,
-      borderColor: state.isDisabled ? '#9ca3af' : '#d1d5db',
       color: '#3b82f6', // синий индикатор стрелки
       ':hover': {
         color: '#3b82f6', // такой же при наведении
