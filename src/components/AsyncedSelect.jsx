@@ -2,7 +2,7 @@ import React from 'react';
 import AsyncSelect from "react-select/async";
 import { selectStyles } from '../styles/selectStyles';
 
-const VirtualizedSelect = React.memo(({
+const AsyncedSelect = React.memo(({
   loadOptions,
   options = [],
   onChange,
@@ -30,4 +30,4 @@ const VirtualizedSelect = React.memo(({
   );
 });
 
-export default VirtualizedSelect;
+export default AsyncedSelect;

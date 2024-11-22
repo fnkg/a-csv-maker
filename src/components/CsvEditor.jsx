@@ -1,32 +1,24 @@
 'use client'
-
 import React, { useState } from 'react';
+import { services, doctors, data } from '@/src/data';
+import { useOptions } from '../hooks/useOptions';
 import {
-  loadOptions,
+  AsyncedSelect,
+  BasicSelect,
+  DatePickerInput,
+  NumberInput,
+} from '@/src/components';
+import {
   loadFormattedOptions,
-  useOptions
-} from '../hooks/useOptions';
-
-import VirtualizedSelect from './VirtualizedSelect';
-import BasicSelect from './BasicSelect';
-
-import DatePickerInput from './DatePickerInput';
-import NumberInput from './NumberInput';
-
-import {
   formatDoctorLabel,
   formatServiceLabel,
   formatDateToLocal,
+  getSelectValue,
   downloadCsv
 } from '@/src/utils/utils'
 
-import services from '@/src/data/services.json';
-import doctors from '@/src/data/doctors';
-import payers from '@/src/data/payers';
-import data from '@/src/data/data';
 
-
-const CsvEditor = () => {
+export default function CsvEditor() {
   const [rows, setRows] = useState([]);
   const [newRow, setNewRow] = useState({
     legal_entity_id: '',
@@ -42,7 +34,7 @@ const CsvEditor = () => {
 
   const [error, setError] = useState('');
 
-  const { clinicLegalEntityOptions, organizationOptions, currencyOptions } = useOptions(data);
+  const { payersOptions, clinicLegalEntityOptions, organizationOptions, currencyOptions } = useOptions(data);
 
   const handleSelectChange = (selectedOption, fieldName) => {
     setNewRow({ ...newRow, [fieldName]: selectedOption ? selectedOption.value : '' });
@@ -67,12 +59,11 @@ const CsvEditor = () => {
     downloadCsv(rows);
   };
 
-  const addRow = () => {
+  const handleAddRow = () => {
     if (newRow.legal_entity_id === '' || newRow.code === '' || newRow.legal_id === '' || isNaN(newRow.maxAmountToPay)) {
       setError('Пожалуйста, заполните все обязательные поля корректно.');
       return;
     }
-
     setRows([
       ...rows,
       {
@@ -81,7 +72,6 @@ const CsvEditor = () => {
         scheduledOn: formatDateToLocal(newRow.scheduledOn)
       }
     ]);
-
     // Сброс ошибки после успешного добавления
     setError('');
   };
@@ -89,12 +79,12 @@ const CsvEditor = () => {
   const handleClearAll = () => {
     setRows([]); // Очистка массива строк
     setNewRow({ // Сброс состояния для новой строки
-      legal_entity_id: '',
-      contract_id: '',
-      code: '',
-      legal_id: '',
-      user_id: '',
-      organization_id: '',
+      legal_entity_id: null,
+      contract_id: null,
+      code: null,
+      legal_id: null,
+      user_id: null,
+      organization_id: null,
       maxAmountToPay: '',
       currency: 'RUB',
       scheduledOn: '',
@@ -104,13 +94,12 @@ const CsvEditor = () => {
 
   return (
     <div className="p-8">
-      {/* Отображение ошибок */}
       {error && <h3 className="text-red-500 text-xs mb-4 absolute top-7 left-21">{error}</h3>}
 
-      {/* Шаблонная форма для заполнения строки */}
       <form className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-        <VirtualizedSelect
-          loadOptions={loadOptions(payers.insuranceCompanies, 'name', 'legal_entity_id')}
+        <BasicSelect
+          options={payersOptions}
+          value={getSelectValue(payersOptions, newRow.legal_entity_id)}
           onChange={(option) => handleSelectChange(option, 'legal_entity_id')}
           placeholder="Плательщик"
         />
@@ -122,25 +111,47 @@ const CsvEditor = () => {
           isSearchable={false}
         />
 
-        <VirtualizedSelect
+        <AsyncedSelect
           loadOptions={loadFormattedOptions(services.services, formatServiceLabel, 'code')}
+          value={
+            newRow.code
+              ? {
+                value: newRow.code,
+                label: formatServiceLabel(
+                  services.services.find((service) => service.code === newRow.code)
+                ),
+              }
+              : null
+          }
           onChange={(option) => handleSelectChange(option, 'code')}
           placeholder="Услуга"
         />
 
         <BasicSelect
           options={clinicLegalEntityOptions}
+          value={getSelectValue(clinicLegalEntityOptions, newRow.legal_id)}
           onChange={(option) => handleSelectChange(option, 'legal_id')}
           placeholder="Юридическое лицо клиники" />
 
-        <VirtualizedSelect
+        <AsyncedSelect
           loadOptions={loadFormattedOptions(doctors.doctors, formatDoctorLabel, 'user_id')}
+          value={
+            newRow.user_id
+              ? {
+                value: newRow.user_id,
+                label: formatDoctorLabel(
+                  doctors.doctors.find((doctor) => doctor.user_id === newRow.user_id)
+                ),
+              }
+              : null
+          }
           onChange={(option) => handleSelectChange(option, 'user_id')}
           placeholder="Доктор"
         />
 
         <BasicSelect
           options={organizationOptions}
+          value={getSelectValue(organizationOptions, newRow.organization_id)}
           onChange={(option) => handleSelectChange(option, 'organization_id')}
           placeholder="Клиника"
         />
@@ -169,7 +180,7 @@ const CsvEditor = () => {
 
       {/* Кнопки */}
       <div className="flex justify-end mt-8">
-        <button onClick={addRow} className="min-h-[40px] p-[12px] rounded-[12px] text-white bg-[#0354f1] hover:bg-[#1e5dd9]">Добавить строку</button>
+        <button onClick={handleAddRow} className="min-h-[40px] p-[12px] rounded-[12px] text-white bg-[#0354f1] hover:bg-[#1e5dd9]">Добавить строку</button>
         <button onClick={handleClearAll} className="min-h-[40px] p-[12px] rounded-[12px] text-white bg-red-600 hover:bg-red-700 ml-2">Очистить таблицу</button>
         <button onClick={handleDownload} className="min-h-[40px] p-[12px] rounded-[12px] text-white bg-green-600 hover:bg-green-700 ml-2">Скачать CSV</button>
       </div>
@@ -194,12 +205,35 @@ const CsvEditor = () => {
           <tbody className="text-gray-700">
             {rows.map((row, index) => (
               <tr key={index} className="border-b hover:bg-gray-100 transition duration-150 text-sm">
-                <td className="p-3 border">{row.legal_entity_id}</td>
+                <td
+                  className="p-3 border"
+                  title={payersOptions.find(opt => opt.value === row.legal_entity_id)?.label || row.legal_entity_id}>{row.legal_entity_id}
+                </td>
+
                 <td className="p-3 border">-</td>
-                <td className="p-3 border">{row.code}</td>
-                <td className="p-3 border">{row.legal_id}</td>
-                <td className="p-3 border">{row.user_id}</td>
-                <td className="p-3 border">{row.organization_id}</td>
+
+                <td
+                  className="p-3 border"
+                // title={} -- TODO: тултип для услуг
+                >{row.code}
+                </td>
+
+                <td
+                  className="p-3 border"
+                  title={clinicLegalEntityOptions.find(opt => opt.value === row.legal_id)?.label || row.legal_id}>{row.legal_id}
+                </td>
+
+                <td
+                  className="p-3 border"
+                // title={} -- TODO: тултип для докторов
+                >{row.user_id}
+                </td>
+
+                <td
+                  className="p-3 border"
+                  title={organizationOptions.find(opt => opt.value === row.organization_id)?.label || row.organization_id}>{row.organization_id}
+                </td>
+
                 <td className="p-3 border">{row.maxAmountToPay}</td>
                 <td className="p-3 border">{row.currency}</td>
                 <td className="p-3 border">{row.scheduledOn}</td>
@@ -211,5 +245,3 @@ const CsvEditor = () => {
     </div>
   );
 };
-
-export default CsvEditor;

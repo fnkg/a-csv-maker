@@ -29,9 +29,9 @@ export const selectStyles = {
     option: (defaultStyles, state) => ({
       ...defaultStyles,
       color: state.isSelected ? 'rgb(14, 13, 71)' : 'rgb(14, 13, 71)',
-      backgroundColor: state.isSelected ? '#eef4ff' : 'white', // фон при выборе
+      backgroundColor: state.isSelected ? '#eef4ff' : 'white',
       ':hover': {
-        backgroundColor: '#eef4ff', // фон при наведении
+        backgroundColor: '#eef4ff',
       },
       padding: '10px',
       fontSize: '15px',
