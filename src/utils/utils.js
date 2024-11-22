@@ -1,4 +1,21 @@
 import Papa from 'papaparse';
+import { debounce } from 'lodash';
+
+const loadFormattedOptions = (data, labelKeyFormatter, valueKey) => {
+  const debouncedLoad = debounce((inputValue, callback) => {
+    console.log('Data:', data); // Логирование для проверки вызовов
+
+    const filteredOptions = data
+      .filter(item => labelKeyFormatter(item).toLowerCase().includes(inputValue.toLowerCase()))
+      .map(item => ({
+        value: item[valueKey],
+        label: labelKeyFormatter(item),
+      }));
+    callback(filteredOptions);
+  }, 300);
+
+  return debouncedLoad;
+};
 
 const formatDoctorLabel = (doctor) => {
   return `${doctor.last_name} ${doctor.first_name} ${doctor.patronymic ? `${doctor.patronymic}` : ''}`;
@@ -15,6 +32,10 @@ const formatDateToLocal = (date) => {
   const day = String(date.getDate()).padStart(2, '0');
   return `${year}-${month}-${day}`;
 };
+
+const getSelectValue = (options, value) =>
+  value ? { value, label: options.find(opt => opt.value === value)?.label || '' } : null;
+
 
 const downloadCsv = (rows) => {
   const csv = Papa.unparse(rows, {
@@ -33,8 +54,10 @@ const downloadCsv = (rows) => {
 };
 
 export {
+  loadFormattedOptions,
   formatDoctorLabel,
   formatServiceLabel,
   formatDateToLocal,
+  getSelectValue,
   downloadCsv
 }

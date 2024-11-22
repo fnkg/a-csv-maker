@@ -1,36 +1,13 @@
 import { useMemo } from 'react';
-import { debounce } from 'lodash';
 
-const loadOptions = (data, labelKey, valueKey) => {
-  const debouncedLoad = debounce((inputValue, callback) => {
-    const filteredOptions = data
-      .filter(item => item[labelKey].toLowerCase().includes(inputValue.toLowerCase()))
-      .map(item => ({
-        value: item[valueKey],
-        label: item[labelKey],
-      }));
-    callback(filteredOptions);
-  }, 300);
+export const useOptions = (data) => {
+  const payersOptions = useMemo(() => {
+    return data.payers.map(entity => ({
+      value: entity.legal_entity_id,
+      label: entity.name
+    }));
+  }, [data]);
 
-  return debouncedLoad;
-};
-
-const loadFormattedOptions = (data, labelKeyFormatter, valueKey) => {
-  const debouncedLoad = debounce((inputValue, callback) => {
-    console.log('Data:', data); // Логирование для проверки вызовов
-    const filteredOptions = data
-      .filter(item => labelKeyFormatter(item).toLowerCase().includes(inputValue.toLowerCase()))
-      .map(item => ({
-        value: item[valueKey],
-        label: labelKeyFormatter(item),
-      }));
-    callback(filteredOptions);
-  }, 300);
-
-  return debouncedLoad;
-};
-
-const useOptions = (data) => {
   const clinicLegalEntityOptions = useMemo(() => {
     return data.clinicLegalEntities.map(entity => ({
       value: entity.legal_id,
@@ -53,14 +30,9 @@ const useOptions = (data) => {
   }, [data]);
 
   return {
+    payersOptions,
     clinicLegalEntityOptions,
     organizationOptions,
     currencyOptions
   };
 };
-
-export {
-  loadOptions,
-  loadFormattedOptions,
-  useOptions
-}
