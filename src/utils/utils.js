@@ -1,41 +1,27 @@
 import Papa from 'papaparse';
-import { debounce } from 'lodash';
 
-const loadFormattedOptions = (data, labelKeyFormatter, valueKey) => {
-  const debouncedLoad = debounce((inputValue, callback) => {
-    console.log('Data:', data); // Логирование для проверки вызовов
+const fetchData = async (endpoint) => {
+  const authHeader = `Basic ${btoa(`${process.env.API_USERNAME}:${process.env.API_PASSWORD}`)}`;
+  const response = await fetch(`${process.env.API_BASE_URL}${endpoint}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": authHeader,
+    },
+  });
 
-    const filteredOptions = data
-      .filter(item => labelKeyFormatter(item).toLowerCase().includes(inputValue.toLowerCase()))
-      .map(item => ({
-        value: item[valueKey],
-        label: labelKeyFormatter(item),
-      }));
-    callback(filteredOptions);
-  }, 300);
+  if (!response.ok) {
+    const errorText = await response.text(); // Логируем HTML
+    console.error("Server returned an error:", errorText);
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
 
-  return debouncedLoad;
+  return response.json();
 };
 
-const formatDoctorLabel = (doctor) => {
-  return `${doctor.last_name} ${doctor.first_name} ${doctor.patronymic ? `${doctor.patronymic}` : ''}`;
-};
-
-const formatServiceLabel = (service) => {
-  const truncatedName = service.name.length > 50 ? `${service.name.substring(0, 100)}...` : service.name;
-  return `${truncatedName} (code: ${service.code})`;
-};
-
-const formatDateToLocal = (date) => {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
-};
-
-const getSelectValue = (options, value) =>
-  value ? { value, label: options.find(opt => opt.value === value)?.label || '' } : null;
-
+function byField(fieldName) {
+  return (a, b) => (a[fieldName] > b[fieldName] ? 1 : -1);
+}
 
 const downloadCsv = (rows) => {
   const csv = Papa.unparse(rows, {
@@ -53,11 +39,36 @@ const downloadCsv = (rows) => {
   document.body.removeChild(link);
 };
 
+const currencies = [
+  {
+    value: "RUB",
+    label: "RUB"
+  },
+  {
+    value: "GEL",
+    label: "GEL"
+  },
+  {
+    value: "AED",
+    label: "AED"
+  },
+  {
+    value: "AMD",
+    label: "AMD"
+  }
+];
+
+const formatDateToLocal = (date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
 export {
-  loadFormattedOptions,
-  formatDoctorLabel,
-  formatServiceLabel,
-  formatDateToLocal,
-  getSelectValue,
-  downloadCsv
+  fetchData,
+  byField,
+  downloadCsv,
+  currencies,
+  formatDateToLocal
 }

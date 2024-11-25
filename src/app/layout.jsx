@@ -3,7 +3,7 @@ import { Roboto } from 'next/font/google'
 
 export const metadata = {
   title: 'CSV Editor',
-  description: 'дааа, давай наклепаем тысячу строк в этом чудесном интерфейсе, чтобы загрузить их все скорее в АСТРУ',
+  description: 'Собираем CSV для загрузки в CMS 🙂',
 }
 
 export const roboto = Roboto({ subsets: ['latin'], weight: ['100', '300', '400', '500', '700'] });

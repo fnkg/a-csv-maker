@@ -1,7 +1,6 @@
 'use client'
-import React, { useState } from 'react';
-import { services, doctors, data } from '@/src/data';
-import { useOptions } from '../hooks/useOptions';
+
+import { useState } from 'react';
 import {
   AsyncedSelect,
   BasicSelect,
@@ -9,16 +8,14 @@ import {
   NumberInput,
 } from '@/src/components';
 import {
-  loadFormattedOptions,
-  formatDoctorLabel,
-  formatServiceLabel,
   formatDateToLocal,
-  getSelectValue,
-  downloadCsv
+  downloadCsv,
+  currencies
 } from '@/src/utils/utils'
 
 
-export default function CsvEditor() {
+export default function CsvEditor({ selectOptions }) {
+  const [error, setError] = useState(null);
   const [rows, setRows] = useState([]);
   const [newRow, setNewRow] = useState({
     legal_entity_id: '',
@@ -32,9 +29,12 @@ export default function CsvEditor() {
     scheduledOn: ''
   });
 
-  const [error, setError] = useState('');
+  if (!selectOptions) {
+    return <div>Loading...</div>;
+  }
+  console.log('OPTIONS', selectOptions)
+  const { legalPayers = [], services = [], legalСlinics =[], doctors = [], organizations = [] } = selectOptions;
 
-  const { payersOptions, clinicLegalEntityOptions, organizationOptions, currencyOptions } = useOptions(data);
 
   const handleSelectChange = (selectedOption, fieldName) => {
     setNewRow({ ...newRow, [fieldName]: selectedOption ? selectedOption.value : '' });
@@ -98,8 +98,7 @@ export default function CsvEditor() {
 
       <form className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         <BasicSelect
-          options={payersOptions}
-          value={getSelectValue(payersOptions, newRow.legal_entity_id)}
+          options={legalPayers || []}
           onChange={(option) => handleSelectChange(option, 'legal_entity_id')}
           placeholder="Плательщик"
         />
@@ -112,46 +111,38 @@ export default function CsvEditor() {
         />
 
         <AsyncedSelect
-          loadOptions={loadFormattedOptions(services.services, formatServiceLabel, 'code')}
-          value={
-            newRow.code
-              ? {
-                value: newRow.code,
-                label: formatServiceLabel(
-                  services.services.find((service) => service.code === newRow.code)
-                ),
-              }
-              : null
+          loadOptions={(inputValue) =>
+            Promise.resolve(
+              (services || []).filter((service) =>
+                service.label.toLowerCase().includes(inputValue.toLowerCase())
+              )
+            )
           }
           onChange={(option) => handleSelectChange(option, 'code')}
           placeholder="Услуга"
         />
 
         <BasicSelect
-          options={clinicLegalEntityOptions}
-          value={getSelectValue(clinicLegalEntityOptions, newRow.legal_id)}
+          options={legalСlinics || []}
+          // value={getSelectValue(data.legalСlinics || [], newRow.legal_id)}
           onChange={(option) => handleSelectChange(option, 'legal_id')}
-          placeholder="Юридическое лицо клиники" />
+          placeholder="Юридическое лицо клиники"
+        />
 
         <AsyncedSelect
-          loadOptions={loadFormattedOptions(doctors.doctors, formatDoctorLabel, 'user_id')}
-          value={
-            newRow.user_id
-              ? {
-                value: newRow.user_id,
-                label: formatDoctorLabel(
-                  doctors.doctors.find((doctor) => doctor.user_id === newRow.user_id)
-                ),
-              }
-              : null
+          loadOptions={(inputValue) =>
+            Promise.resolve(
+              (doctors || []).filter((doctor) =>
+                doctor.label.toLowerCase().includes(inputValue.toLowerCase())
+              )
+            )
           }
           onChange={(option) => handleSelectChange(option, 'user_id')}
           placeholder="Доктор"
         />
 
         <BasicSelect
-          options={organizationOptions}
-          value={getSelectValue(organizationOptions, newRow.organization_id)}
+          options={organizations || []}
           onChange={(option) => handleSelectChange(option, 'organization_id')}
           placeholder="Клиника"
         />
@@ -166,9 +157,9 @@ export default function CsvEditor() {
         />
 
         <BasicSelect
-          options={currencyOptions}
-          onChange={(option) => handleSelectChange(option, 'currency')}
-          value={newRow.currency ? { value: newRow.currency, label: newRow.currency } : null}
+          options={currencies || []}
+          onChange={(currency) => handleSelectChange(currency, 'currency')}
+          // value={newRow.currency ? { value: newRow.currency, label: newRow.currency } : null}
           placeholder="Валюта"
         />
 
@@ -176,6 +167,7 @@ export default function CsvEditor() {
           selected={newRow.scheduledOn}
           onChange={handleDateChange}
         />
+
       </form>
 
       {/* Кнопки */}
@@ -207,7 +199,7 @@ export default function CsvEditor() {
               <tr key={index} className="border-b hover:bg-gray-100 transition duration-150 text-sm">
                 <td
                   className="p-3 border"
-                  title={payersOptions.find(opt => opt.value === row.legal_entity_id)?.label || row.legal_entity_id}>{row.legal_entity_id}
+                  title={legalPayers.find(opt => opt.value === row.legal_entity_id)?.label || row.legal_entity_id}>{row.legal_entity_id}
                 </td>
 
                 <td className="p-3 border">-</td>
@@ -220,7 +212,7 @@ export default function CsvEditor() {
 
                 <td
                   className="p-3 border"
-                  title={clinicLegalEntityOptions.find(opt => opt.value === row.legal_id)?.label || row.legal_id}>{row.legal_id}
+                  title={legalСlinics.find(opt => opt.value === row.legal_id)?.label || row.legal_id}>{row.legal_id}
                 </td>
 
                 <td
@@ -231,7 +223,7 @@ export default function CsvEditor() {
 
                 <td
                   className="p-3 border"
-                  title={organizationOptions.find(opt => opt.value === row.organization_id)?.label || row.organization_id}>{row.organization_id}
+                  title={organizations.find(opt => opt.value === row.organization_id)?.label || row.organization_id}>{row.organization_id}
                 </td>
 
                 <td className="p-3 border">{row.maxAmountToPay}</td>
