@@ -2,24 +2,24 @@ import Papa from 'papaparse';
 
 const fetchData = async (endpoint) => {
   const authHeader = `Basic ${btoa(`${process.env.API_USERNAME}:${process.env.API_PASSWORD}`)}`;
-  const response = await fetch(`${process.env.API_BASE_URL}${endpoint}`, {
-    method: "GET",
+  const response = await fetch (`${process.env.API_BASE_URL}${endpoint}`, {
+    method: 'GET',
     headers: {
-      "Content-Type": "application/json",
-      "Authorization": authHeader,
+      'Content-Type': 'application/json',
+      'Authorization': authHeader,
     },
   });
 
   if (!response.ok) {
     const errorText = await response.text(); // Логируем HTML
-    console.error("Server returned an error:", errorText);
+    console.error('Server returned an error:', errorText);
     throw new Error(`HTTP error! status: ${response.status}`);
   }
 
   return response.json();
 };
 
-function byField(fieldName) {
+function byField (fieldName) {
   return (a, b) => (a[fieldName] > b[fieldName] ? 1 : -1);
 }
 
@@ -33,7 +33,7 @@ const downloadCsv = (rows) => {
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.href = url;
-  link.setAttribute('download', 'edited_data.csv');
+  link.setAttribute('download', `max-amount.csv`);
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
@@ -41,20 +41,20 @@ const downloadCsv = (rows) => {
 
 const currencies = [
   {
-    value: "RUB",
-    label: "RUB"
+    value: 'RUB',
+    label: 'RUB'
   },
   {
-    value: "GEL",
-    label: "GEL"
+    value: 'GEL',
+    label: 'GEL'
   },
   {
-    value: "AED",
-    label: "AED"
+    value: 'AED',
+    label: 'AED'
   },
   {
-    value: "AMD",
-    label: "AMD"
+    value: 'AMD',
+    label: 'AMD'
   }
 ];
 

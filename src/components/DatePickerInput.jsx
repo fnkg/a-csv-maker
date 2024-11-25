@@ -6,11 +6,11 @@ const DatePickerInput = ({ selected, onChange }) => {
     <DatePicker
       selected={selected}
       onChange={onChange}
-      dateFormat="yyyy-MM-dd"
-      className="p-[10px] min-h-[40px] border border-gray-300 rounded-[12px] w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-      calendarClassName="shadow-lg border border-gray-300"
-      popperPlacement="bottom-end" // Расположение выпадающего календаря
-      placeholderText="Укажите дату начала действия"
+      dateFormat='yyyy-MM-dd'
+      className='p-[10px]  focus:outline-none focus:ring-2 focus:ring-blue-500 hover:ring-1 hover:ring-blue-500'
+      calendarClassName='shadow-lg  border-gray-300'
+      popperPlacement='bottom-end'
+      placeholderText='Укажите дату начала действия'
       enableTabLoop={false}
       // showYearDropdown
       // dropdownMode="select"
