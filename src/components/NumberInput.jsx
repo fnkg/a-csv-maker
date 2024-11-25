@@ -3,7 +3,7 @@ import React from 'react';
 const NumberInput = React.memo(({ name, value, onChange, onKeyDown, placeholder, className }) => {
   return (
     <input
-      type="number"
+      type='number'
       name={name}
       value={value !== undefined ? value : ''}
       onChange={onChange}

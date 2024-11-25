@@ -11,7 +11,7 @@ body {
     padding: 8px;
     line-height: 24px;
     border-radius: 12px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid hsl(0, 0%, 80%);
     outline: none;
     transition: border-color 0.2s;
 }
@@ -31,6 +31,38 @@ body {
     margin: 0;
 }
 
-.number-input {
-    -moz-appearance: textfield;
+.custom-scroll::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+    background: tranparent;
+    margin: 7.5px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+    background: #b5b5b5;
+    border-radius: 4px;
+    cursor: 'pointer';
+}
+
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+    background: #878787;
+}
+
+table {
+    border-spacing: 0;
+}
+
+
+.react-datepicker__input-container,
+.react-datepicker__input-container input {
+    width: 100%;
+    border-radius: 12px;
+}
+
+.react-datepicker__input-container {
+    border: 1px solid hsl(0, 0%, 80%);
+}
+
+.react-datepicker__input-container input {
+    max-height: 40px;
 }

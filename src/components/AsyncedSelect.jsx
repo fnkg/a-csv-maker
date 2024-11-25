@@ -1,5 +1,5 @@
 import React from 'react';
-import AsyncSelect from "react-select/async";
+import AsyncSelect from 'react-select/async';
 import { selectStyles } from '../styles/selectStyles';
 
 const AsyncedSelect = React.memo(({
@@ -8,6 +8,7 @@ const AsyncedSelect = React.memo(({
   onChange,
   value,
   placeholder,
+  noOptionsMessage,
   isDisabled = false,
   isClearable = true,
   className = '' }) => {
@@ -22,6 +23,7 @@ const AsyncedSelect = React.memo(({
       onChange={onChange}
       value={value}
       placeholder={placeholder}
+      noOptionsMessage={noOptionsMessage}
       isDisabled={isDisabled}
       isClearable={isClearable}
       className={className}
