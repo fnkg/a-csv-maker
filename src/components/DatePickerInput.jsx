@@ -13,7 +13,7 @@ const DatePickerInput = ({ selected, onChange }) => {
       placeholderText='Укажите дату начала действия'
       enableTabLoop={false}
       // showYearDropdown
-      // dropdownMode="select"
+      // dropdownMode='select'
       // showMonthDropdown
       // useShortMonthInDropdown
       // withPortal

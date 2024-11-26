@@ -43,7 +43,7 @@ const formattedOptions = {
   doctors: doctors.users
     .map((doctor) => ({
       value: doctor.id,
-      label: `${doctor.lastName} ${doctor.firstName} ${doctor.patronymic || ""}`,
+      label: `${doctor.lastName} ${doctor.firstName} ${doctor.patronymic || ''}`,
     }))
     .sort(byField('label')),
   organizations: organizations.organizations
@@ -51,10 +51,11 @@ const formattedOptions = {
       value: organization.id,
       label: organization.name,
     }))
-    .sort(byField("label")),
+    .sort(byField('label')),
 };
 
-// console.log('FData', formattedOptions.legalPayers);
+// проверяю сформированные опции
+// console.log('FData', formattedOptions.legalPayers); 
 
 return (
   <div className='min-h-full rounded-lg bg-[#f0f1f5]'>
