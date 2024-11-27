@@ -25,7 +25,10 @@
         ```
     - **для прода**:
         ```
-        npm run build npm run start
+        npm run build
+        ```
+        ```
+        npm run start
         ```
 ### Использование
 1. **Откройте приложение**:
