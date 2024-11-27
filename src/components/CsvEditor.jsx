@@ -29,7 +29,7 @@ export default function CsvEditor({ selectOptions }) {
   });
   const [error, setError] = useState(null);
 
-  console.log('OPTIONS', selectOptions)
+  // console.log('OPTIONS', selectOptions)
   const { legalPayers = [], services = [], legalClinics = [], doctors = [], organizations = [] } = selectOptions;
 
   const handleSelectChange = (selectedOption, fieldName) => {
