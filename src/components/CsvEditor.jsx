@@ -1,17 +1,17 @@
-'use client'
+"use client"
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback } from "react";
 import {
   AsyncedSelect,
   BasicSelect,
   DatePickerInput,
   NumberInput,
-} from '@/src/components';
+} from "@/src/components";
 import {
   formatDateToLocal,
   downloadCsv,
   currencies
-} from '@/src/utils/utils'
+} from "@/src/utils/utils"
 
 
 export default function CsvEditor({ selectOptions }) {
@@ -29,8 +29,8 @@ export default function CsvEditor({ selectOptions }) {
   });
   const [error, setError] = useState(null);
 
-  // console.log('OPTIONS', selectOptions)
-  const { legalPayers = [], services = [], legalСlinics = [], doctors = [], organizations = [] } = selectOptions;
+  console.log('OPTIONS', selectOptions)
+  const { legalPayers = [], services = [], legalClinics = [], doctors = [], organizations = [] } = selectOptions;
 
   const handleSelectChange = (selectedOption, fieldName) => {
     setNewRow({ ...newRow, [fieldName]: selectedOption ? selectedOption.value : '' });
@@ -57,7 +57,7 @@ export default function CsvEditor({ selectOptions }) {
 
   const handleAddRow = () => {
     if (newRow.legal_entity_id === '' || newRow.code === '' || newRow.legal_id === '' || isNaN(newRow.maxAmountToPay)) {
-      setError('Пожалуйста, заполните все обязательные поля корректно.');
+      setError('Пожалуйста, заполните все обязательные поля ✏️');
       return;
     }
     setRows([
@@ -128,9 +128,9 @@ export default function CsvEditor({ selectOptions }) {
         />
 
         <BasicSelect
-          options={legalСlinics || []}
+          options={legalClinics || []}
           onChange={(option) => handleSelectChange(option, 'legal_id')}
-          value={newRow.legal_id ? { value: newRow.legal_id, label: legalСlinics.find(opt => opt.value === newRow.legal_id)?.label } : null}
+          value={newRow.legal_id ? { value: newRow.legal_id, label: legalClinics.find(opt => opt.value === newRow.legal_id)?.label } : null}
           placeholder='Юрлицо клиники'
         />
 
@@ -195,7 +195,7 @@ export default function CsvEditor({ selectOptions }) {
 
       {/* Отображение всех строк */}
       <h2 className='text-xl font-semibold mt-4 mb-4 text-gray-800'>Текущие строки</h2>
-      <div className='overflow-x-auto max-h-96 custom-scroll rounded-[12px]'>
+      <div className='overflow-x-auto max-h-[470px] custom-scroll rounded-[12px]'>
         <table className='min-w-full bg-white border-gray-300 border-separate'>
           <thead className='sticky top-0'>
             <tr className='bg-gray-50 text-gray-600 text-sm *:font-normal font-mono'>
@@ -229,7 +229,7 @@ export default function CsvEditor({ selectOptions }) {
 
                 <td
                   className='p-3 border'
-                  title={legalСlinics.find(opt => opt.value === row.legal_id)?.label || row.legal_id}>
+                  title={legalClinics.find(opt => opt.value === row.legal_id)?.label || row.legal_id}>
                   {row.legal_id}
                 </td>
 

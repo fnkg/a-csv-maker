@@ -1,6 +1,6 @@
-import React from 'react';
-import AsyncSelect from 'react-select/async';
-import { selectStyles } from '../styles/selectStyles';
+import React from "react";
+import AsyncSelect from "react-select/async";
+import { selectStyles } from "../styles/selectStyles";
 
 const AsyncedSelect = React.memo(({
   loadOptions,

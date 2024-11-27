@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const NumberInput = React.memo(({ name, value, onChange, onKeyDown, placeholder, className }) => {
   return (

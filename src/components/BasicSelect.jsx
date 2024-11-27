@@ -1,5 +1,5 @@
-import Select from 'react-select';
-import { selectStyles } from '../styles/selectStyles';
+import Select from "react-select";
+import { selectStyles } from "../styles/selectStyles";
 
 const BasicSelect = ({ options, onChange, value, placeholder, isDisabled = false, isClearable = true, className = '' }) => {
   return (
