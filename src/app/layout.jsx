@@ -10,7 +10,7 @@ export const roboto = Roboto({ subsets: ['latin'], weight: ['100', '300', '400',
 
 export default function RootLayout({ children }) {
   return (
-    <html lang='ru' suppressHydrationWarning>
+    <html lang='ru'>
       <body className={`${roboto.className} antialiased bg-[#272B37] h-screen pt-6 pb-6`}>
         {children}
       </body>
