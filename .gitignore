@@ -4,11 +4,12 @@
 # next.js
 .next/
 
-#
+# ide and local
 .eslintrc.json
 .env
 .env.local
 .vscode
+.idea
 
 # production
 /build
