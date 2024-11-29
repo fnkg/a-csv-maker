@@ -3,6 +3,7 @@ export const selectStyles = {
     ...base,
     borderRadius: '16px',
     marginTop: '0.4rem',
+    zIndex: '11'
   }),
 
   menuList: (base) => ({

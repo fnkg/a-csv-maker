@@ -2,7 +2,7 @@ import Papa from "papaparse";
 
 const fetchData = async (endpoint) => {
   const authHeader = `Basic ${btoa(`${process.env.API_USERNAME}:${process.env.API_PASSWORD}`)}`;
-  const response = await fetch (`${process.env.API_BASE_URL}${endpoint}`, {
+  const response = await fetch(`${process.env.API_BASE_URL}${endpoint}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -19,7 +19,7 @@ const fetchData = async (endpoint) => {
   return response.json();
 };
 
-function byField (fieldName) {
+function byField(fieldName) {
   return (a, b) => (a[fieldName] > b[fieldName] ? 1 : -1);
 }
 
@@ -39,8 +39,7 @@ const downloadCsv = (rows) => {
   document.body.removeChild(link);
 };
 
-const currencies = [
-  {
+const currencies = [{
     value: 'RUB',
     label: 'RUB'
   },

@@ -13,8 +13,8 @@ export default async function Page() {
       fetchData('/user?locale=ru&isDoctor=true&statuses=active'),
       fetchData('/organization?statuses=active&types=clinic'),
     ])
-  } catch (err) {
-    console.error('Ошибка при загрузке данных:', err);
+  } catch (error) {
+    console.error('Ошибка при загрузке данных:', error);
     return <div>Не удалось загрузить данные 😔</div>;
   }
 

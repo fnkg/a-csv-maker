@@ -21,7 +21,7 @@ export default function CsvEditor({ selectOptions }) {
     currency: 'RUB',
     scheduledOn: ''
   });
-  const [error, setError] = useState(null);
+  const [error, setError] = useState();
 
   // console.log('OPTIONS', selectOptions)
 
