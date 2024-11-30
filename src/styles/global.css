@@ -51,3 +51,18 @@ table {
 .custom-scroll::-webkit-scrollbar-thumb:hover {
   background: #878787;
 }
+
+.delete-row {
+  animation: rotate-out 0.5s forwards;
+}
+
+@keyframes rotate-out {
+  from {
+    transform: rotateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: rotateX(90deg);
+    opacity: 0;
+  }
+}

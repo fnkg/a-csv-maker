@@ -22,6 +22,7 @@ export default function CsvEditor({ selectOptions }) {
     scheduledOn: ''
   });
   const [error, setError] = useState();
+  const [deleteRowIndex, setDeleteRowIndex] = useState(null);
 
   // console.log('OPTIONS', selectOptions)
 
@@ -65,6 +66,14 @@ export default function CsvEditor({ selectOptions }) {
     setError('');
   };
 
+  const handleDeleteRow = (index) => {
+    setDeleteRowIndex(index);
+    setTimeout(() => {
+      setRows((prevRows) => prevRows.filter((_, i) => i !== index));
+      setDeleteRowIndex(null);
+    }, 500);
+  };
+
   const handleDownload = () => {
     downloadCsv(rows)
   };
@@ -97,7 +106,12 @@ export default function CsvEditor({ selectOptions }) {
         onDownload={handleDownload}
       />
 
-      <Table rows={rows} {...selectOptions} />
+      <Table
+        rows={rows}
+        {...selectOptions}
+        deleteRowIndex={deleteRowIndex}
+        onDeleteRow={handleDeleteRow}
+      />
     </div>
   );
 };
