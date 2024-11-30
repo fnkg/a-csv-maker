@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "node server.js",
     "lint": "next lint"
   },
   "keywords": [],
@@ -13,6 +13,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
     "lodash": "^4.17.21",
     "next": "^15.0.3",
     "papaparse": "^5.4.1",
