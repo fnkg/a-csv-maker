@@ -1,3 +1,26 @@
+export type LegalEntity = {
+    id: string;
+    name: string;
+    type: string;
+};
+
+export type Service = {
+    code: string;
+    name: string;
+};
+
+export type Doctor = {
+    id: string;
+    lastName: string;
+    firstName: string;
+    patronymic?: string;
+};
+
+export type Organization = {
+    id: string;
+    name: string;
+};
+
 export type BaseRow = {
     legal_entity_id: string;
     contract_id: string;

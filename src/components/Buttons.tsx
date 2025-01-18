@@ -4,7 +4,7 @@ type ButtonsProps = {
   onDownload: () => void;
 };
 
-const Buttons: React.FC<ButtonsProps> = ({ onAddRow, onClearAll, onDownload }) =>  {
+const Buttons: React.FC<ButtonsProps> = ({ onAddRow, onClearAll, onDownload }) => {
   return (
     <div className='flex justify-end mt-8'>
       <button onClick={onAddRow} className='min-h-[40px] p-[12px] rounded-[12px] text-white bg-[#0354f1] hover:bg-[#1e5dd9]'>Добавить строку</button>

@@ -1,24 +1,20 @@
 import { fetchData, byField } from "@/src/utils/utils";
-
-type Option = {
-  value: string;
-  label: string;
-};
+import { OptionType, LegalEntity, Service, Doctor, Organization } from "@/src/utils/types";
 
 type FormattedOptions = {
-  legalPayers: Option[];
-  services: Option[];
-  legalClinics: Option[];
-  doctors: Option[];
-  organizations: Option[];
+  legalPayers: OptionType[];
+  services: OptionType[];
+  legalClinics: OptionType[];
+  doctors: OptionType[];
+  organizations: OptionType[];
 };
 
 export const fetchFormattedOptions = async (): Promise<FormattedOptions> => {
   const [legalEntities, services, doctors, organizations] = await Promise.all([
-    fetchData('/legal-entity?status=active'),
-    fetchData('/service?statuses=active'),
-    fetchData('/user?locale=ru&isDoctor=true&statuses=active'),
-    fetchData('/organization?statuses=active&types=clinic'),
+    fetchData<{ legalEntities: LegalEntity[] }>('/legal-entity?status=active'),
+    fetchData<{ services: Service[] }>('/service?statuses=active'),
+    fetchData<{ users: Doctor[] }>('/user?locale=ru&isDoctor=true&statuses=active'),
+    fetchData<{ organizations: Organization[] }>('/organization?statuses=active&types=clinic'),
   ]);
 
   return {
