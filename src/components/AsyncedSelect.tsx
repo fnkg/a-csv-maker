@@ -2,12 +2,13 @@ import React from "react";
 import AsyncSelect from "react-select/async";
 import { StylesConfig } from "react-select";
 import { selectStyles } from "../styles/selectStyles";
+import { OptionType } from '@/src/utils/types';
 
 type AsyncedSelectProps = {
-  loadOptions: (inputValue: string) => Promise<any[]>;
-  options?: any[];
-  onChange: (value: any) => void;
-  value: any;
+  loadOptions: (inputValue: string) => Promise<OptionType[]>;
+  options?: OptionType[];
+  onChange: (value: OptionType | null) => void;
+  value: OptionType | null;
   placeholder?: string;
   noOptionsMessage?: () => string;
   isDisabled?: boolean;
@@ -42,5 +43,7 @@ const AsyncedSelect: React.FC<AsyncedSelectProps> = React.memo(({
     />
   );
 });
+
+AsyncedSelect.displayName = "AsyncedSelect";
 
 export default AsyncedSelect;

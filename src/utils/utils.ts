@@ -1,16 +1,19 @@
 import Papa from "papaparse";
 
-interface FetchOptions {
+type FetchOptions = {
   method: string;
-  headers: Record<string, string>;
-}
+  headers: {
+    'Content-Type': string;
+    Authorization: string;
+  };
+};
 
 interface Currency {
   value: string;
   label: string;
 }
 
-const fetchData = async (endpoint: string): Promise<any> => {
+const fetchData = async <T>(endpoint: string): Promise<T> => {
   const authHeader = `Basic ${btoa(`${process.env.API_USERNAME}:${process.env.API_PASSWORD}`)}`;
   const response = await fetch(`${process.env.API_BASE_URL}${endpoint}`, {
     method: 'GET',
@@ -20,13 +23,15 @@ const fetchData = async (endpoint: string): Promise<any> => {
     },
   } as FetchOptions);
 
+  console.log('Authorization Header Length:', authHeader.length);
+
   if (!response.ok) {
     const errorText = await response.text();
     console.error('Server returned an error:', errorText);
     throw new Error(`HTTP error! status: ${response.status}`);
   }
 
-  return response.json();
+  return response.json() as Promise<T>;
 };
 
 function byField<T>(fieldName: keyof T): (a: T, b: T) => number {

@@ -5,31 +5,8 @@ import Form from './Form';
 import Table from './Table';
 import Buttons from './Buttons';
 import ErrorMessage from './ErrorMessage';
+import { CsvEditorProps, RowData } from '@/src/utils/types';
 import { downloadCsv, formatDateToMoscow } from '@/src/utils/utils';
-
-type SelectOption = { value: string; label: string };
-
-type CsvEditorProps = {
-  selectOptions: {
-    legalPayers: SelectOption[];
-    services: SelectOption[];
-    legalClinics: SelectOption[];
-    doctors: SelectOption[];
-    organizations: SelectOption[];
-  };
-};
-
-type RowData = {
-  legal_entity_id: string;
-  contract_id: string;
-  code: string;
-  legal_id: string;
-  user_id: string;
-  organization_id: string;
-  maxAmountToPay: number | string;
-  currency: string;
-  scheduledOn: string;
-};
 
 const CsvEditor: React.FC<CsvEditorProps> = ({ selectOptions }) => {
   const [rows, setRows] = useState<RowData[]>([]);

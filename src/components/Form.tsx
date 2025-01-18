@@ -1,30 +1,7 @@
 import { useCallback } from 'react';
 import { AsyncedSelect, BasicSelect, DatePickerInput, NumberInput } from '@/src/components';
-import { currencies } from '../utils/utils';
-
-type SelectOption = { value: string; label: string };
-
-type FormProps = {
-  newRow: {
-    legal_entity_id?: string;
-    code?: string;
-    legal_id?: string;
-    user_id?: string;
-    organization_id?: string;
-    maxAmountToPay?: number | string;
-    currency?: string;
-    scheduledOn?: string;
-  };
-  legalPayers: SelectOption[];
-  services: SelectOption[];
-  legalClinics: SelectOption[];
-  doctors: SelectOption[];
-  organizations: SelectOption[];
-  handleSelectChange: (option: SelectOption | null, field: string) => void;
-  handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  handleDateChange: (date: Date | null) => void;
-  handleKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void;
-};
+import { FormProps } from '@/src/utils/types';
+import { currencies } from '@/src//utils/utils';
 
 const Form: React.FC<FormProps> = ({
   newRow,
@@ -75,7 +52,10 @@ const Form: React.FC<FormProps> = ({
         onChange={useCallback((option) => handleSelectChange(option, 'code'), [handleSelectChange])}
         value={
           newRow.code
-            ? { value: newRow.code, label: services.find((s) => s.value === newRow.code)?.label }
+            ? {
+              value: newRow.code,
+              label: services.find((s) => s.value === newRow.code)?.label || ''
+            }
             : null
         }
         placeholder='Услуга'

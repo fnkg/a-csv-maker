@@ -1,11 +1,12 @@
 import Select from "react-select";
 import { StylesConfig } from "react-select";
 import { selectStyles } from "../styles/selectStyles";
+import { OptionType } from '@/src/utils/types';
 
 type BasicSelectProps = {
-  options: any[];
-  onChange: (value: any) => void;
-  value: any;
+  options: OptionType[];
+  onChange: (value: OptionType | null) => void;
+  value: OptionType | null;
   placeholder?: string;
   isDisabled?: boolean;
   isClearable?: boolean;

@@ -42,7 +42,7 @@ export const selectStyles = {
     cursor: 'pointer',
   }),
 
-  control: (defaultStyles: React.CSSProperties, state: { isFocused: boolean }) => ({
+  control: (defaultStyles: React.CSSProperties) => ({
     ...defaultStyles,
     // backgroundColor: 'white',
     // border: state.isFocused ? '2px solid #0354f1' : '1px solid #d1d5db', // граница изменяется при фокусе

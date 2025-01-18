@@ -30,4 +30,6 @@ const NumberInput: React.FC<NumberInputProps> = React.memo(({
   );
 });
 
+NumberInput.displayName = "NumberInput";
+
 export default NumberInput;

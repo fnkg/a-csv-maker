@@ -1,4 +1,3 @@
-// src/utils/dataFetcher.ts
 import { fetchData, byField } from "@/src/utils/utils";
 
 type Option = {
@@ -15,9 +14,7 @@ type FormattedOptions = {
 };
 
 export const fetchFormattedOptions = async (): Promise<FormattedOptions> => {
-  let legalEntities, services, doctors, organizations;
-
-  [legalEntities, services, doctors, organizations] = await Promise.all([
+  const [legalEntities, services, doctors, organizations] = await Promise.all([
     fetchData('/legal-entity?status=active'),
     fetchData('/service?statuses=active'),
     fetchData('/user?locale=ru&isDoctor=true&statuses=active'),

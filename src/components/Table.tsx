@@ -1,26 +1,4 @@
-type SelectOption = { value: string; label: string };
-
-type TableRow = {
-  legal_entity_id: string;
-  code: string;
-  legal_id: string;
-  user_id: string;
-  organization_id: string;
-  maxAmountToPay: number | string;
-  currency: string;
-  scheduledOn: string | null;
-};
-
-type TableProps = {
-  rows: TableRow[];
-  onDeleteRow: (index: number) => void;
-  deleteRowIndex?: number | null;
-  legalPayers: SelectOption[];
-  services: SelectOption[];
-  legalClinics: SelectOption[];
-  doctors: SelectOption[];
-  organizations: SelectOption[];
-};
+import { TableProps } from '@/src/utils/types';
 
 export default function Table({
   rows,
