@@ -1,12 +1,12 @@
 export const selectStyles = {
-  menu: (base) => ({
+  menu: (base: React.CSSProperties) => ({
     ...base,
     borderRadius: '16px',
     marginTop: '0.4rem',
     zIndex: '11'
   }),
 
-  menuList: (base) => ({
+  menuList: (base: React.CSSProperties) => ({
     ...base,
     borderRadius: '16px',
     paddingTop: '0px',
@@ -30,7 +30,7 @@ export const selectStyles = {
     },
   }),
 
-  option: (defaultStyles, state) => ({
+  option: (defaultStyles: React.CSSProperties, state: { isSelected: boolean }) => ({
     ...defaultStyles,
     color: state.isSelected ? 'rgb(14, 13, 71)' : 'rgb(14, 13, 71)',
     backgroundColor: state.isSelected ? '#eef4ff' : 'white',
@@ -42,7 +42,7 @@ export const selectStyles = {
     cursor: 'pointer',
   }),
 
-  control: (defaultStyles, state) => ({
+  control: (defaultStyles: React.CSSProperties, state: { isFocused: boolean }) => ({
     ...defaultStyles,
     // backgroundColor: 'white',
     // border: state.isFocused ? '2px solid #0354f1' : '1px solid #d1d5db', // граница изменяется при фокусе
@@ -55,17 +55,17 @@ export const selectStyles = {
     minHeight: '40px',
   }),
 
-  singleValue: (defaultStyles) => ({
+  singleValue: (defaultStyles: React.CSSProperties) => ({
     ...defaultStyles,
     color: '#1f2937',
   }),
 
-  placeholder: (defaultStyles) => ({
+  placeholder: (defaultStyles: React.CSSProperties) => ({
     ...defaultStyles,
     color: '#9ca3af',
   }),
 
-  dropdownIndicator: (defaultStyles, state) => ({
+  dropdownIndicator: (defaultStyles: React.CSSProperties, state: { isDisabled: boolean }) => ({
     ...defaultStyles,
     color: state.isDisabled ? '#9ca3af' : '#3b82f6',
     ':hover': {
@@ -78,7 +78,7 @@ export const selectStyles = {
     display: 'none',
   }),
 
-  clearIndicator: (defaultStyles) => ({
+  clearIndicator: (defaultStyles: React.CSSProperties) => ({
     ...defaultStyles,
     color: '#cccccc',
     ':hover': {

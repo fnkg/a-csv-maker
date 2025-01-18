@@ -1,8 +1,37 @@
+type SelectOption = { value: string; label: string };
+
+type TableRow = {
+  legal_entity_id: string;
+  code: string;
+  legal_id: string;
+  user_id: string;
+  organization_id: string;
+  maxAmountToPay: number | string;
+  currency: string;
+  scheduledOn: string | null;
+};
+
+type TableProps = {
+  rows: TableRow[];
+  onDeleteRow: (index: number) => void;
+  deleteRowIndex?: number | null;
+  legalPayers: SelectOption[];
+  services: SelectOption[];
+  legalClinics: SelectOption[];
+  doctors: SelectOption[];
+  organizations: SelectOption[];
+};
+
 export default function Table({
   rows,
-  onDeleteRow, deleteRowIndex,
-  legalPayers, services, legalClinics, doctors, organizations
-}) {
+  onDeleteRow,
+  deleteRowIndex,
+  legalPayers,
+  services,
+  legalClinics,
+  doctors,
+  organizations,
+}: TableProps) {
   return (
     <>
       <h2 className='text-xl font-semibold mt-4 mb-4 text-gray-800'>Текущие строки</h2>
@@ -23,10 +52,15 @@ export default function Table({
           </thead>
           <tbody className='text-gray-700'>
             {rows.map((row, index) => (
-              <tr key={index} className={`hover:bg-gray-100 transition duration-150 text-xs font-mono group ${deleteRowIndex === index ? "delete-row" : ""}`}>
+              <tr
+                key={index}
+                className={`hover:bg-gray-100 transition duration-150 text-xs font-mono group ${deleteRowIndex === index ? "delete-row" : ""
+                  }`}
+              >
                 <td
                   className='p-3 border-r border-b'
-                  title={legalPayers.find(opt => opt.value === row.legal_entity_id)?.label || row.legal_entity_id}>
+                  title={legalPayers.find((opt) => opt.value === row.legal_entity_id)?.label || row.legal_entity_id}
+                >
                   {row.legal_entity_id}
                 </td>
 
@@ -34,25 +68,29 @@ export default function Table({
 
                 <td
                   className='p-3 border-r border-b'
-                  title={services.find(opt => opt.value === row.code)?.label || row.code}>
+                  title={services.find((opt) => opt.value === row.code)?.label || row.code}
+                >
                   {row.code}
                 </td>
 
                 <td
                   className='p-3 border-r border-b'
-                  title={legalClinics.find(opt => opt.value === row.legal_id)?.label || row.legal_id}>
+                  title={legalClinics.find((opt) => opt.value === row.legal_id)?.label || row.legal_id}
+                >
                   {row.legal_id}
                 </td>
 
                 <td
                   className='p-3 border-r border-b'
-                  title={doctors.find(opt => opt.value === row.id)?.label || row.id}>
+                  title={doctors.find((opt) => opt.value === row.user_id)?.label || row.user_id}
+                >
                   {row.user_id}
                 </td>
 
                 <td
                   className='p-3 border-r border-b'
-                  title={organizations.find(opt => opt.value === row.organization_id)?.label || row.organization_id}>
+                  title={organizations.find((opt) => opt.value === row.organization_id)?.label || row.organization_id}
+                >
                   {row.organization_id}
                 </td>
 

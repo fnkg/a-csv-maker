@@ -3,7 +3,12 @@ import "react-datepicker/dist/react-datepicker.min.css";
 import "@/src/styles/customDatePicker.css"
 import { ru } from 'date-fns/locale/ru';
 
-const DatePickerInput = ({ selected, onChange }) => {
+type DatePickerInputProps = {
+  selected: Date | null;
+  onChange: (date: Date | null ) => void;
+};
+
+const DatePickerInput: React.FC<DatePickerInputProps> = ({ selected, onChange }) => {
   return (
     <DatePicker
       className='p-[10px]  focus:outline-none focus:ring-2 focus:ring-blue-500 hover:ring-1 hover:ring-blue-500'
@@ -15,12 +20,6 @@ const DatePickerInput = ({ selected, onChange }) => {
       popperPlacement='bottom-end'
       selected={selected}
       showPopperArrow={false}
-    // fixedHeight
-    // showYearDropdown
-    // dropdownMode='select'
-    // showMonthDropdown
-    // useShortMonthInDropdown
-    // withPortal
     />
   );
 };

@@ -5,12 +5,35 @@ import Form from './Form';
 import Table from './Table';
 import Buttons from './Buttons';
 import ErrorMessage from './ErrorMessage';
-import { downloadCsv, formatDateToLocal } from '@/src/utils/utils';
+import { downloadCsv, formatDateToMoscow } from '@/src/utils/utils';
 
+type SelectOption = { value: string; label: string };
 
-export default function CsvEditor({ selectOptions }) {
-  const [rows, setRows] = useState([]);
-  const [newRow, setNewRow] = useState({
+type CsvEditorProps = {
+  selectOptions: {
+    legalPayers: SelectOption[];
+    services: SelectOption[];
+    legalClinics: SelectOption[];
+    doctors: SelectOption[];
+    organizations: SelectOption[];
+  };
+};
+
+type RowData = {
+  legal_entity_id: string;
+  contract_id: string;
+  code: string;
+  legal_id: string;
+  user_id: string;
+  organization_id: string;
+  maxAmountToPay: number | string;
+  currency: string;
+  scheduledOn: string;
+};
+
+const CsvEditor: React.FC<CsvEditorProps> = ({ selectOptions }) => {
+  const [rows, setRows] = useState<RowData[]>([]);
+  const [newRow, setNewRow] = useState<RowData>({
     legal_entity_id: '',
     contract_id: '',
     code: '',
@@ -19,34 +42,31 @@ export default function CsvEditor({ selectOptions }) {
     organization_id: '',
     maxAmountToPay: '',
     currency: 'RUB',
-    scheduledOn: ''
+    scheduledOn: '',
   });
-  const [error, setError] = useState();
-  const [deleteRowIndex, setDeleteRowIndex] = useState(null);
-
-  // console.log('OPTIONS', selectOptions)
+  const [error, setError] = useState<string | undefined>();
+  const [deleteRowIndex, setDeleteRowIndex] = useState<number | null>(null);
 
   const handleAddRow = () => {
     if (
       newRow.legal_entity_id === '' ||
       newRow.code === '' ||
       newRow.legal_id === '' ||
-      isNaN(newRow.maxAmountToPay) ||
-      newRow.scheduledOn === ''
+      isNaN(Number(newRow.maxAmountToPay)) ||
+      !newRow.scheduledOn
     ) {
       setError('Пожалуйста, заполните все обязательные поля ✏️');
       return;
     }
-    // console.log('DATE CSV', newRow.scheduledOn)
+
     setRows([
       ...rows,
       {
         ...newRow,
-        maxAmountToPay: parseFloat(newRow.maxAmountToPay) * 100,
-        scheduledOn: formatDateToLocal(newRow.scheduledOn)
+        maxAmountToPay: parseFloat(newRow.maxAmountToPay.toString()) * 100,
+        scheduledOn: newRow.scheduledOn
       }
     ]);
-    // console.log('DATE CSV AFTER FORMATE', formatDateToLocal(newRow.scheduledOn))
     setError('');
   };
 
@@ -66,7 +86,7 @@ export default function CsvEditor({ selectOptions }) {
     setError('');
   };
 
-  const handleDeleteRow = (index) => {
+  const handleDeleteRow = (index: number) => {
     setDeleteRowIndex(index);
     setTimeout(() => {
       setRows((prevRows) => prevRows.filter((_, i) => i !== index));
@@ -92,7 +112,10 @@ export default function CsvEditor({ selectOptions }) {
           const { name, value } = e.target;
           setNewRow({ ...newRow, [name]: value });
         }}
-        handleDateChange={(date) => setNewRow({ ...newRow, scheduledOn: date })}
+        handleDateChange={(date: Date | null) => {
+          const formattedDate = date ? formatDateToMoscow(date) : ""; // Преобразуем дату в московское время
+          setNewRow({ ...newRow, scheduledOn: formattedDate }); // Сохраняем строку в стейте
+        }}
         handleKeyDown={(e) => {
           if (!/[0-9]/.test(e.key) && !['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Tab'].includes(e.key)) {
             e.preventDefault();
@@ -115,3 +138,5 @@ export default function CsvEditor({ selectOptions }) {
     </div>
   );
 };
+
+export default CsvEditor;
