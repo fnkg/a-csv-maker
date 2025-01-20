@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 type NumberInputProps = {
   name: string;
@@ -19,7 +19,7 @@ const NumberInput: React.FC<NumberInputProps> = React.memo(({
 }) => {
   return (
     <input
-      type='number'
+      type="number"
       name={name}
       value={value !== undefined ? value : ''}
       onChange={onChange}
@@ -30,6 +30,6 @@ const NumberInput: React.FC<NumberInputProps> = React.memo(({
   );
 });
 
-NumberInput.displayName = "NumberInput";
+NumberInput.displayName = 'NumberInput';
 
 export default NumberInput;

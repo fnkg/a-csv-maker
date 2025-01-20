@@ -5,7 +5,7 @@
 ### Установка и настройка
 1. **Клонируйте репозиторий**:
    ```bash
-   git clone https://github.com/vsenichego/a-csv-maker.git
+   git clone https://github.com/fnkg/a-csv-maker.git
     ```
 3. **Перейдите в папку проекта**:
     ```bash

@@ -37,7 +37,7 @@ export type RowData = BaseRow;
 
 export type FormRow = Partial<BaseRow>;
 
-export type TableRow = Omit<BaseRow, "scheduledOn"> & { scheduledOn: string | null };
+export type TableRow = Omit<BaseRow, 'scheduledOn'> & { scheduledOn: string | null };
 
 export type SelectOption = {
     value: string;

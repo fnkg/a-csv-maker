@@ -1,8 +1,8 @@
-import React from "react";
-import AsyncSelect from "react-select/async";
-import { StylesConfig } from "react-select";
-import { selectStyles } from "../styles/selectStyles";
-import { OptionType } from '@/src/utils/types';
+import React from 'react';
+import AsyncSelect from 'react-select/async';
+import { OptionType } from '@/src/helpers/types';
+import { StylesConfig } from 'react-select';
+import { selectStyles } from '../styles/selectStyles';
 
 type AsyncedSelectProps = {
   loadOptions: (inputValue: string) => Promise<OptionType[]>;
@@ -44,6 +44,6 @@ const AsyncedSelect: React.FC<AsyncedSelectProps> = React.memo(({
   );
 });
 
-AsyncedSelect.displayName = "AsyncedSelect";
+AsyncedSelect.displayName = 'AsyncedSelect';
 
 export default AsyncedSelect;

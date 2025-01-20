@@ -1,7 +1,7 @@
-import Select from "react-select";
-import { StylesConfig } from "react-select";
-import { selectStyles } from "../styles/selectStyles";
-import { OptionType } from '@/src/utils/types';
+import Select from 'react-select';
+import { StylesConfig } from 'react-select';
+import { OptionType } from '@/src/helpers/types';
+import { selectStyles } from '../styles/selectStyles';
 
 type BasicSelectProps = {
   options: OptionType[];

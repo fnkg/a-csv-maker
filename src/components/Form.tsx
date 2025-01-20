@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { AsyncedSelect, BasicSelect, DatePickerInput, NumberInput } from '@/src/components';
-import { FormProps } from '@/src/utils/types';
-import { currencies } from '@/src//utils/utils';
+import { FormProps } from '@/src/helpers/types';
+import { currencies } from '@/src/helpers/utils';
 
 const Form: React.FC<FormProps> = ({
   newRow,
@@ -16,7 +16,7 @@ const Form: React.FC<FormProps> = ({
   handleKeyDown,
 }) => {
   return (
-    <form className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3'>
+    <form className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
       <BasicSelect
         options={legalPayers || []}
         onChange={(option) => handleSelectChange(option, 'legal_entity_id')}
@@ -28,15 +28,15 @@ const Form: React.FC<FormProps> = ({
             }
             : null
         }
-        placeholder='Плательщик'
+        placeholder="Плательщик"
       />
 
       <BasicSelect
         options={[]}
         onChange={() => { }}
         isDisabled={true}
-        value={{ value: ',', label: 'contract_id' }}
-        placeholder='Contract ID (пустое значение)'
+        value={{ value: ",", label: "contract_id" }}
+        placeholder="Contract ID (пустое значение)"
       />
 
       <AsyncedSelect
@@ -58,7 +58,7 @@ const Form: React.FC<FormProps> = ({
             }
             : null
         }
-        placeholder='Услуга'
+        placeholder="Услуга"
         noOptionsMessage={() => 'начните вводить текст ⌨️'}
       />
 
@@ -73,7 +73,7 @@ const Form: React.FC<FormProps> = ({
             }
             : null
         }
-        placeholder='Юрлицо клиники'
+        placeholder="Юрлицо клиники"
       />
 
       <AsyncedSelect
@@ -95,8 +95,8 @@ const Form: React.FC<FormProps> = ({
             }
             : null
         }
-        placeholder='Доктор'
-        noOptionsMessage={() => 'начните вводить текст ⌨️'}
+        placeholder="Доктор"
+        noOptionsMessage={() => "начните вводить текст ⌨️"}
       />
 
       <BasicSelect
@@ -110,27 +110,27 @@ const Form: React.FC<FormProps> = ({
             }
             : null
         }
-        placeholder='Клиника'
+        placeholder="Клиника"
       />
 
       <NumberInput
-        name='maxAmountToPay'
+        name="maxAmountToPay"
         value={newRow.maxAmountToPay}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
-        placeholder='Максимальная сумма к доплате'
-        className='number-input'
+        placeholder="Максимальная сумма к доплате"
+        className="number-input"
       />
 
       <BasicSelect
         options={currencies || []}
-        onChange={(currency) => handleSelectChange(currency, 'currency')}
+        onChange={(currency) => handleSelectChange(currency, "currency")}
         value={newRow.currency ? { value: newRow.currency, label: newRow.currency } : null}
-        placeholder='Валюта'
+        placeholder="Валюта"
       />
 
       <DatePickerInput
-        selected={newRow.scheduledOn ? new Date(newRow.scheduledOn + "T00:00:00Z") : null}
+        selected={newRow.scheduledOn ? new Date(newRow.scheduledOn + 'T00:00:00Z') : null}
         onChange={handleDateChange}
       />
     </form>

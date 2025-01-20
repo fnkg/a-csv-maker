@@ -1,5 +1,5 @@
-import CsvEditor from "@/src/components/CsvEditor";
-import { fetchFormattedOptions } from "@/src/utils/dataFetcher";
+import CsvEditor from '@/src/components/CsvEditor';
+import { fetchFormattedOptions } from '@/src/helpers/dataFetcher';
 
 export const revalidate = 3600;
 
@@ -9,7 +9,7 @@ export default async function Page() {
   try {
     selectOptions = await fetchFormattedOptions();
   } catch (error) {
-    console.error("Ошибка при загрузке данных:", error);
+    console.error('Ошибка при загрузке данных:', error);
     return <div>Не удалось загрузить данные 😔</div>;
   }
 

@@ -1,12 +1,12 @@
-"use client"
+'use client';
 
 import { useState } from 'react';
+import { CsvEditorProps, RowData } from '@/src/helpers/types';
+import { downloadCsv, formatDateToMoscow } from '@/src/helpers/utils';
 import Form from './Form';
 import Table from './Table';
 import Buttons from './Buttons';
 import ErrorMessage from './ErrorMessage';
-import { CsvEditorProps, RowData } from '@/src/utils/types';
-import { downloadCsv, formatDateToMoscow } from '@/src/utils/utils';
 
 const CsvEditor: React.FC<CsvEditorProps> = ({ selectOptions }) => {
   const [rows, setRows] = useState<RowData[]>([]);
@@ -76,7 +76,7 @@ const CsvEditor: React.FC<CsvEditorProps> = ({ selectOptions }) => {
   };
 
   return (
-    <div className='p-8'>
+    <div className="p-8">
       <ErrorMessage error={error} />
 
       <Form
@@ -90,8 +90,8 @@ const CsvEditor: React.FC<CsvEditorProps> = ({ selectOptions }) => {
           setNewRow({ ...newRow, [name]: value });
         }}
         handleDateChange={(date: Date | null) => {
-          const formattedDate = date ? formatDateToMoscow(date) : ""; // Преобразуем дату в московское время
-          setNewRow({ ...newRow, scheduledOn: formattedDate }); // Сохраняем строку в стейте
+          const formattedDate = date ? formatDateToMoscow(date) : '';
+          setNewRow({ ...newRow, scheduledOn: formattedDate });
         }}
         handleKeyDown={(e) => {
           if (!/[0-9]/.test(e.key) && !['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Tab'].includes(e.key)) {

@@ -1,5 +1,5 @@
-import { fetchData, byField } from "@/src/utils/utils";
-import { OptionType, LegalEntity, Service, Doctor, Organization } from "@/src/utils/types";
+import { OptionType, LegalEntity, Service, Doctor, Organization } from '@/src/helpers/types';
+import { byField, fetchData } from '@/src/helpers/utils';
 
 type FormattedOptions = {
   legalPayers: OptionType[];
@@ -25,12 +25,14 @@ export const fetchFormattedOptions = async (): Promise<FormattedOptions> => {
         label: entity.name,
       }))
       .sort(byField('label')),
+
     services: services.services
       .map((service: { code: string; name: string }) => ({
         value: service.code,
         label: `${service.name} (code: ${service.code})`,
       }))
       .sort(byField('value')),
+
     legalClinics: legalEntities.legalEntities
       .filter((entity: { type: string; name: string }) => {
         return entity.type === 'clinic' && entity.name.includes('Чайка') || entity.name === 'Kandinsky Clinic';
@@ -40,12 +42,14 @@ export const fetchFormattedOptions = async (): Promise<FormattedOptions> => {
         label: entity.name,
       }))
       .sort(byField('label')),
+
     doctors: doctors.users
       .map((doctor: { id: string; lastName: string; firstName: string; patronymic?: string }) => ({
         value: doctor.id,
         label: `${doctor.lastName} ${doctor.firstName} ${doctor.patronymic || ''}`,
       }))
       .sort(byField('label')),
+
     organizations: organizations.organizations
       .map((organization: { id: string; name: string }) => ({
         value: organization.id,

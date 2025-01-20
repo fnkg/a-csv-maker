@@ -10,6 +10,7 @@
 .env.local
 .vscode
 .idea
+.github
 
 # production
 /build

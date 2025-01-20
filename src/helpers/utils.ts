@@ -1,13 +1,17 @@
-import Papa from "papaparse";
+import Papa from 'papaparse';
 
-interface FetchOptions {
+interface IFetchOptions {
   method: string;
   headers: Record<string, string>;
 }
 
-interface Currency {
+interface ICurrency {
   value: string;
   label: string;
+}
+
+function byField<T>(fieldName: keyof T): (a: T, b: T) => number {
+  return (a, b) => (a[fieldName] > b[fieldName] ? 1 : -1);
 }
 
 const fetchData = async <T>(endpoint: string): Promise<T> => {
@@ -18,7 +22,7 @@ const fetchData = async <T>(endpoint: string): Promise<T> => {
       'Content-Type': 'application/json',
       'Authorization': authHeader,
     },
-  } as FetchOptions);
+  } as IFetchOptions);
 
   if (!response.ok) {
     const errorText = await response.text();
@@ -29,9 +33,12 @@ const fetchData = async <T>(endpoint: string): Promise<T> => {
   return response.json();
 };
 
-function byField<T>(fieldName: keyof T): (a: T, b: T) => number {
-  return (a, b) => (a[fieldName] > b[fieldName] ? 1 : -1);
-}
+const currencies: ICurrency[] = [
+  { value: 'RUB', label: 'RUB' },
+  { value: 'GEL', label: 'GEL' },
+  { value: 'AED', label: 'AED' },
+  { value: 'AMD', label: 'AMD' },
+];
 
 const downloadCsv = (rows: object[]): void => {
   const csv = Papa.unparse(rows, {
@@ -49,13 +56,6 @@ const downloadCsv = (rows: object[]): void => {
   document.body.removeChild(link);
 };
 
-const currencies: Currency[] = [
-  { value: 'RUB', label: 'RUB' },
-  { value: 'GEL', label: 'GEL' },
-  { value: 'AED', label: 'AED' },
-  { value: 'AMD', label: 'AMD' },
-];
-
 const formatDateToMoscow = (date: Date): string => {
   const moscowOffset = 3 * 60;
   const utcDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
@@ -69,9 +69,9 @@ const formatDateToMoscow = (date: Date): string => {
 };
 
 export {
-  fetchData,
   byField,
-  downloadCsv,
   currencies,
+  downloadCsv,
+  fetchData,
   formatDateToMoscow,
 }
