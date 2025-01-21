@@ -1,5 +1,5 @@
-import { OptionType, LegalEntity, Service, Doctor, Organization } from '@/src/helpers/types';
 import { byField, fetchData } from '@/src/helpers/utils';
+import { OptionType, LegalEntity, Service, Doctor, Organization } from '@/src/helpers/types';
 
 type FormattedOptions = {
   legalPayers: OptionType[];

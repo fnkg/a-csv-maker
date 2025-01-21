@@ -12,11 +12,11 @@ export default function Table({
 }: TableProps) {
   return (
     <>
-      <h2 className="text-xl font-semibold mt-4 mb-4 text-gray-800">Текущие строки</h2>
-      <div className="overflow-x-auto max-h-[470px] custom-scroll rounded-[12px]">
-        <table className="min-w-full bg-white border-gray-300 border-separate">
+      <h2 className="text-2xl mt-4 mb-4 font-medium text-gray-800">Текущие строки</h2>
+      <div className="overflow-x-auto max-h-[50vh] custom-scroll rounded-[12px]">
+        <table className="w-full bg-white border-gray-300 border-separate table-fixed">
           <thead className="sticky top-0 z-10">
-            <tr className="bg-gray-50 text-gray-600 text-sm *:font-normal font-mono">
+            <tr className="bg-gray-50 text-gray-700 text-sm *:font-bold font-mono">
               <th className="p-3 border-r border-b text-left">Payer Legal ID</th>
               <th className="p-3 border-r border-b text-left">Contract ID</th>
               <th className="p-3 border-r border-b text-left">Service Code</th>

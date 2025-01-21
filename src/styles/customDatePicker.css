@@ -1,3 +1,7 @@
+.react-datepicker > * {
+  @apply font-apercu font-light;
+}
+
 /* Стили для инпута даты */
 .react-datepicker__input-container {
   border: 1px solid hsl(0, 0%, 80%);
@@ -21,8 +25,6 @@
 /* Стили для пикера даты */
 .react-datepicker {
   margin: -0.25rem 0;
-  font-family: "Roboto";
-  font-weight: 300;
   border: 1px solid hsl(0, 0%, 80%);
   border-radius: 12px;
 }

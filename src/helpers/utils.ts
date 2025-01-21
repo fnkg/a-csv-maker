@@ -14,6 +14,13 @@ function byField<T>(fieldName: keyof T): (a: T, b: T) => number {
   return (a, b) => (a[fieldName] > b[fieldName] ? 1 : -1);
 }
 
+const currencies: ICurrency[] = [
+  { value: 'RUB', label: 'RUB' },
+  { value: 'GEL', label: 'GEL' },
+  { value: 'AED', label: 'AED' },
+  { value: 'AMD', label: 'AMD' },
+];
+
 const fetchData = async <T>(endpoint: string): Promise<T> => {
   const authHeader = `Basic ${btoa(`${process.env.API_USERNAME}:${process.env.API_PASSWORD}`)}`;
   const response = await fetch(`${process.env.API_BASE_URL}${endpoint}`, {
@@ -32,13 +39,6 @@ const fetchData = async <T>(endpoint: string): Promise<T> => {
 
   return response.json();
 };
-
-const currencies: ICurrency[] = [
-  { value: 'RUB', label: 'RUB' },
-  { value: 'GEL', label: 'GEL' },
-  { value: 'AED', label: 'AED' },
-  { value: 'AMD', label: 'AMD' },
-];
 
 const downloadCsv = (rows: object[]): void => {
   const csv = Papa.unparse(rows, {

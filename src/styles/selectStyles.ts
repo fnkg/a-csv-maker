@@ -38,16 +38,16 @@ export const selectStyles = {
       backgroundColor: '#eef4ff',
     },
     padding: '10px',
+    fontFamily: 'ApercuPro, sans-serif',
     fontSize: '15px',
+    fontWeight: 300,
     cursor: 'pointer',
   }),
 
   control: (defaultStyles: React.CSSProperties) => ({
     ...defaultStyles,
     // backgroundColor: 'white',
-    // border: state.isFocused ? '2px solid #0354f1' : '1px solid #d1d5db', // граница изменяется при фокусе
     borderRadius: '12px',
-    // boxShadow: state.isFocused ? '0 0 0 1px #3b82f6' : 'none',
     ':hover': {
       borderColor: '#3b82f6',
     },
@@ -63,6 +63,8 @@ export const selectStyles = {
   placeholder: (defaultStyles: React.CSSProperties) => ({
     ...defaultStyles,
     color: '#9ca3af',
+    fontFamily: 'ApercuPro, sans-serif',
+    fontWeight: 300,
   }),
 
   dropdownIndicator: (defaultStyles: React.CSSProperties, state: { isDisabled: boolean }) => ({

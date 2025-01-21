@@ -29,7 +29,7 @@ const CsvEditor: React.FC<CsvEditorProps> = ({ selectOptions }) => {
       newRow.legal_entity_id === '' ||
       newRow.code === '' ||
       newRow.legal_id === '' ||
-      isNaN(Number(newRow.maxAmountToPay)) ||
+      newRow.maxAmountToPay === '' ||
       !newRow.scheduledOn
     ) {
       setError('Пожалуйста, заполните все обязательные поля ✏️');
