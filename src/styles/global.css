@@ -4,14 +4,14 @@
 
 @font-face {
   font-family: 'ApercuPro';
-  src: url('./ApercuPro-Light.woff2') format('woff2');
+  src: url('/ApercuPro-Light.woff2') format('woff2');
   font-weight: 300;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'ApercuPro';
-  src: url('./ApercuPro-Medium.woff2') format('woff2');
+  src: url('/ApercuPro-Medium.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
 }
