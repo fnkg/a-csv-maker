@@ -32,6 +32,7 @@ const BasicSelect: React.FC<BasicSelectProps> = ({
       isClearable={isClearable}
       className={className}
       styles={selectStyles as StylesConfig<{ value: string; label: string }, false>}
+      instanceId="select"
     />
   );
 };

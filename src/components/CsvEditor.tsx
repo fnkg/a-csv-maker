@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { CsvEditorProps, RowData } from '@/src/helpers/types';
-import { downloadCsv, formatDateToMoscow } from '@/src/helpers/utils';
+import { downloadCsv, formatDate } from '@/src/helpers/utils';
 import Form from './Form';
 import Table from './Table';
 import Buttons from './Buttons';
@@ -23,6 +23,10 @@ const CsvEditor: React.FC<CsvEditorProps> = ({ selectOptions }) => {
   });
   const [error, setError] = useState<string | undefined>();
   const [deleteRowIndex, setDeleteRowIndex] = useState<number | null>(null);
+
+  // useEffect(() => {
+  //   console.log("newRow on client:", newRow);
+  // }, [newRow]);
 
   const handleAddRow = () => {
     if (
@@ -76,9 +80,9 @@ const CsvEditor: React.FC<CsvEditorProps> = ({ selectOptions }) => {
   };
 
   return (
+
     <div className="p-8">
       <ErrorMessage error={error} />
-
       <Form
         newRow={newRow}
         {...selectOptions}
@@ -90,7 +94,7 @@ const CsvEditor: React.FC<CsvEditorProps> = ({ selectOptions }) => {
           setNewRow({ ...newRow, [name]: value });
         }}
         handleDateChange={(date: Date | null) => {
-          const formattedDate = date ? formatDateToMoscow(date) : '';
+          const formattedDate = date ? formatDate(date) : '';
           setNewRow({ ...newRow, scheduledOn: formattedDate });
         }}
         handleKeyDown={(e) => {

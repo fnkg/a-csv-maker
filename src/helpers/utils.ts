@@ -56,14 +56,10 @@ const downloadCsv = (rows: object[]): void => {
   document.body.removeChild(link);
 };
 
-const formatDateToMoscow = (date: Date): string => {
-  const moscowOffset = 3 * 60;
-  const utcDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
-  const moscowDate = new Date(utcDate.getTime() + moscowOffset * 60000);
-
-  const year = moscowDate.getFullYear();
-  const month = String(moscowDate.getMonth() + 1).padStart(2, "0");
-  const day = String(moscowDate.getDate()).padStart(2, "0");
+const formatDate = (date: Date): string => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
 
   return `${year}-${month}-${day}`
 };
@@ -73,5 +69,5 @@ export {
   currencies,
   downloadCsv,
   fetchData,
-  formatDateToMoscow,
+  formatDate,
 }

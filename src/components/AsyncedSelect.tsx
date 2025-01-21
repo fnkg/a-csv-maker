@@ -40,6 +40,7 @@ const AsyncedSelect: React.FC<AsyncedSelectProps> = React.memo(({
       isClearable={isClearable}
       className={className}
       styles={selectStyles as StylesConfig<{ value: string; label: string }, false>}
+      instanceId="asyncSelect"
     />
   );
 });
