@@ -1,4 +1,5 @@
 import CsvEditor from '@/src/components/CsvEditor';
+import NavigationTabs from '@/src/components/NavigationTabs';
 import { fetchFormattedOptions } from '@/src/helpers/dataFetcher';
 
 export const revalidate = 3600;
@@ -19,6 +20,7 @@ export default async function Page() {
         <h1 className="text-3xl">Редактор CSV</h1>
         <h2 className="text-xl text-gray-300">v0.4.1</h2>
       </header>
+      <NavigationTabs />
       <main>
         <CsvEditor selectOptions={selectOptions} />
       </main>

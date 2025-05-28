@@ -41,6 +41,10 @@ table {
   @apply bg-green-600 hover:bg-green-700;
 }
 
+.btn-tab {
+  @apply  min-h-[40px] p-[12px] last:mr-8 rounded-[12px] text-white bg-[#454a55] hover:bg-[#b4bdcf];
+}
+
 .number-input {
   padding: 8px;
   line-height: 24px;

@@ -2,31 +2,32 @@ import React from 'react';
 
 type NumberInputProps = {
   name: string;
-  value: number | string | undefined;
+  value: number | null;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
   placeholder?: string;
   className?: string;
 };
 
-const NumberInput: React.FC<NumberInputProps> = React.memo(({ 
-  name, 
-  value, 
-  onChange, 
-  onKeyDown, 
-  placeholder, 
-  className 
+const NumberInput: React.FC<NumberInputProps> = React.memo(({
+  name,
+  value,
+  onChange,
+  placeholder,
+  className
 }) => {
   return (
-    <input
-      type="number"
-      name={name}
-      value={value !== undefined ? value : ''}
-      onChange={onChange}
-      onKeyDown={onKeyDown}
-      placeholder={placeholder}
-      className={className}
-    />
+    <>
+      <input
+        type="number"
+        name={name}
+        value={value ? String(value) : ''}
+        onChange={onChange}
+        placeholder={placeholder}
+        className={className}
+        min={0}
+        max={999999999}
+      />
+    </>
   );
 });
 

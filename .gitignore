@@ -10,10 +10,11 @@
 .env.local
 .vscode
 .idea
-.github
+.DS_Store
 
 # production
 /build
 
 # drafts
 .temp/
+.werf_secret_key

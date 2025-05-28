@@ -13,7 +13,6 @@ const Form: React.FC<FormProps> = ({
   handleSelectChange,
   handleInputChange,
   handleDateChange,
-  handleKeyDown,
 }) => {
   return (
     <form className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -115,9 +114,8 @@ const Form: React.FC<FormProps> = ({
 
       <NumberInput
         name="maxAmountToPay"
-        value={newRow.maxAmountToPay}
+        value={newRow.maxAmountToPay ?? null}
         onChange={handleInputChange}
-        onKeyDown={handleKeyDown}
         placeholder="Максимальная сумма к доплате"
         className="number-input"
       />
@@ -130,7 +128,7 @@ const Form: React.FC<FormProps> = ({
       />
 
       <DatePickerInput
-        selected={newRow.scheduledOn ? new Date(newRow.scheduledOn + 'T00:00:00Z') : null}
+        selected={newRow.scheduledOn ? new Date(newRow.scheduledOn) : null}
         onChange={handleDateChange}
       />
     </form>

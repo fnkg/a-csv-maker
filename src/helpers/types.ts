@@ -28,7 +28,7 @@ export type BaseRow = {
     legal_id: string;
     user_id: string;
     organization_id: string;
-    maxAmountToPay: number | string;
+    maxAmountToPay: number | null;
     currency: string;
     scheduledOn: string | null;
 };
@@ -66,7 +66,6 @@ export type FormProps = {
     handleSelectChange: (option: SelectOption | null, field: string) => void;
     handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     handleDateChange: (date: Date | null) => void;
-    handleKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 };
 
 export type TableProps = {

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { CsvEditorProps, RowData } from '@/src/helpers/types';
 import { downloadCsv, formatDate } from '@/src/helpers/utils';
 import Form from './Form';
@@ -17,23 +17,19 @@ const CsvEditor: React.FC<CsvEditorProps> = ({ selectOptions }) => {
     legal_id: '',
     user_id: '',
     organization_id: '',
-    maxAmountToPay: '',
+    maxAmountToPay: null,
     currency: 'RUB',
     scheduledOn: '',
   });
   const [error, setError] = useState<string | undefined>();
   const [deleteRowIndex, setDeleteRowIndex] = useState<number | null>(null);
 
-  // useEffect(() => {
-  //   console.log("newRow on client:", newRow);
-  // }, [newRow]);
-
   const handleAddRow = () => {
     if (
       newRow.legal_entity_id === '' ||
       newRow.code === '' ||
       newRow.legal_id === '' ||
-      newRow.maxAmountToPay === '' ||
+      !newRow.maxAmountToPay||
       !newRow.scheduledOn
     ) {
       setError('Пожалуйста, заполните все обязательные поля ✏️');
@@ -44,7 +40,7 @@ const CsvEditor: React.FC<CsvEditorProps> = ({ selectOptions }) => {
       ...rows,
       {
         ...newRow,
-        maxAmountToPay: parseFloat(newRow.maxAmountToPay.toString()) * 100,
+        maxAmountToPay: newRow.maxAmountToPay * 100,
         scheduledOn: newRow.scheduledOn
       }
     ]);
@@ -60,7 +56,7 @@ const CsvEditor: React.FC<CsvEditorProps> = ({ selectOptions }) => {
       legal_id: '',
       user_id: '',
       organization_id: '',
-      maxAmountToPay: '',
+      maxAmountToPay: null,
       currency: 'RUB',
       scheduledOn: '',
     });
@@ -80,9 +76,9 @@ const CsvEditor: React.FC<CsvEditorProps> = ({ selectOptions }) => {
   };
 
   return (
-
     <div className="p-8">
       <ErrorMessage error={error} />
+
       <Form
         newRow={newRow}
         {...selectOptions}
@@ -90,17 +86,14 @@ const CsvEditor: React.FC<CsvEditorProps> = ({ selectOptions }) => {
           setNewRow({ ...newRow, [fieldName]: option ? option.value : '' })
         }
         handleInputChange={(e) => {
-          const { name, value } = e.target;
+          const { name, min, max } = e.target;
+          let value = e.target.value;
+          value = String(Math.max(Number(min), Math.min(Number(max), Number(value))));
           setNewRow({ ...newRow, [name]: value });
         }}
         handleDateChange={(date: Date | null) => {
           const formattedDate = date ? formatDate(date) : '';
           setNewRow({ ...newRow, scheduledOn: formattedDate });
-        }}
-        handleKeyDown={(e) => {
-          if (!/[0-9]/.test(e.key) && !['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Tab'].includes(e.key)) {
-            e.preventDefault();
-          }
         }}
       />
 
