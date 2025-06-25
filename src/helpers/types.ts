@@ -1,80 +1,82 @@
-export type LegalEntity = {
-    id: string;
-    name: string;
-    type: string;
+export interface IFetchOptions {
+  method: string;
+  headers: Record<string, string>;
+}
+
+export interface IFormattedOptions {
+  legalPayers: SelectOption[];
+  services: SelectOption[];
+  legalClinics: SelectOption[];
+  doctors: SelectOption[];
+  organizations: SelectOption[];
 };
 
-export type Service = {
-    code: string;
-    name: string;
-};
+type WithId = { id: string };
+type WithName = { name: string };
+type WithType = { type: string };
 
-export type Doctor = {
-    id: string;
+export type LegalEntity = WithId & WithName & WithType;
+export type Organization = WithId & WithName;
+export type Doctor = WithId & {
     lastName: string;
     firstName: string;
     patronymic?: string;
 };
-
-export type Organization = {
-    id: string;
-    name: string;
-};
-
-export type BaseRow = {
-    legal_entity_id: string;
-    contract_id: string;
+export type Service = {
     code: string;
-    legal_id: string;
-    user_id: string;
-    organization_id: string;
-    maxAmountToPay: number | null;
-    currency: string;
-    scheduledOn: string | null;
-};
-
-export type RowData = BaseRow;
-
-export type FormRow = Partial<BaseRow>;
-
-export type TableRow = Omit<BaseRow, 'scheduledOn'> & { scheduledOn: string | null };
+    name: string;
+}
 
 export type SelectOption = {
     value: string;
     label: string;
 }
 
-export type OptionType = SelectOption;
+export type SelectOptions = Record<
+    'legalPayers' | 'services' | 'legalClinics' | 'doctors' | 'organizations' | 'currencies',
+    SelectOption[]
+>;
 
 export type CsvEditorProps = {
-    selectOptions: {
-        legalPayers: SelectOption[];
-        services: SelectOption[];
-        legalClinics: SelectOption[];
-        doctors: SelectOption[];
-        organizations: SelectOption[];
-    };
+    activeTab: TemplateKey;
+    selectOptions: SelectOptions;
+    rows: RowData[];
+    setRows: (rows: any) => void;
 };
 
-export type FormProps = {
-    newRow: FormRow;
-    legalPayers: SelectOption[];
-    services: SelectOption[];
-    legalClinics: SelectOption[];
-    doctors: SelectOption[];
-    organizations: SelectOption[];
-    handleSelectChange: (option: SelectOption | null, field: string) => void;
-    handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    handleDateChange: (date: Date | null) => void;
-};
+interface IBaseRow {
+    code: string;
+    organization_id: string;
+    legal_id: string;
+    currency: string;
+}
+export interface IScopRow extends IBaseRow {
+    legal_entity_id: string;
+    contract_id: string;
+    user_id: string;
+    maxAmountToPay: number;
+    scheduledOn: string;
+}
+export interface IPriceListRow extends IBaseRow { value: number; }
 
-export type TableProps = {
-    rows: TableRow[];
-    onDeleteRow: (index: number) => void;
-    deleteRowIndex?: number | null;
-    legalPayers: SelectOption[];
-    services: SelectOption[];
-    legalClinics: SelectOption[];
-    doctors: SelectOption[];
-    organizations: SelectOption[];
-};
+export type RowData = IScopRow | IPriceListRow;
+
+export type DraftRow = Partial<RowData>;
+
+export type TemplateKey = 'priceList' | 'scop';
+
+export interface FieldConfig {
+    name: keyof IScopRow | keyof IPriceListRow
+    required?: boolean;
+    disabled?: boolean;
+    multiple?: boolean;
+    component: 'Select' | 'AsyncSelect' | 'NumberInput' | 'DatePicker';
+    optionsKey?: keyof SelectOptions;
+    defaultValue?: string | number;
+    placeholder?: string;
+}
+
+export interface TemplateConfig {
+    fields: FieldConfig[];
+    makeRows: (draft: any) => RowData[];
+}

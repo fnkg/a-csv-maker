@@ -1,15 +1,7 @@
-import { byField, fetchData } from '@/src/helpers/utils';
-import { OptionType, LegalEntity, Service, Doctor, Organization } from '@/src/helpers/types';
+import { byField, fetchData } from '@/helpers/utils';
+import type { IFormattedOptions, LegalEntity, Service, Doctor, Organization } from '@/helpers/types';
 
-type FormattedOptions = {
-  legalPayers: OptionType[];
-  services: OptionType[];
-  legalClinics: OptionType[];
-  doctors: OptionType[];
-  organizations: OptionType[];
-};
-
-export const fetchFormattedOptions = async (): Promise<FormattedOptions> => {
+export const fetchFormattedOptions = async (): Promise<IFormattedOptions> => {
   const [legalEntities, services, doctors, organizations] = await Promise.all([
     fetchData<{ legalEntities: LegalEntity[] }>('/legal-entity?status=active'),
     fetchData<{ services: Service[] }>('/service?statuses=active'),

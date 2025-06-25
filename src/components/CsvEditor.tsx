@@ -1,50 +1,67 @@
 'use client';
 
-import { useState } from 'react';
-import { CsvEditorProps, RowData } from '@/src/helpers/types';
-import { downloadCsv, formatDate } from '@/src/helpers/utils';
-import Form from './Form';
-import Table from './Table';
-import Buttons from './Buttons';
-import ErrorMessage from './ErrorMessage';
+import { useState, useEffect } from 'react';
 
-const CsvEditor: React.FC<CsvEditorProps> = ({ selectOptions }) => {
-  const [rows, setRows] = useState<RowData[]>([]);
-  const [newRow, setNewRow] = useState<RowData>({
-    legal_entity_id: '',
-    contract_id: '',
-    code: '',
-    legal_id: '',
-    user_id: '',
-    organization_id: '',
-    maxAmountToPay: null,
-    currency: 'RUB',
-    scheduledOn: '',
-  });
+import Buttons from './ui/Buttons';
+import ErrorMessage from './ui/ErrorMessage';
+import Form from '@/components/form';
+import Table from '@/components/table';
+
+import type { CsvEditorProps, TemplateKey, TemplateConfig, IScopRow, IPriceListRow, RowData } from '@/helpers/types';
+import { templates } from '@/helpers/templates';
+import { downloadCsv, formatDate } from '@/helpers/utils';
+
+type ExtendedProps = CsvEditorProps & {
+  rows: RowData[];
+  setRows: React.Dispatch<React.SetStateAction<RowData[]>>;
+  isClearing: boolean;
+};
+
+const CsvEditor: React.FC<ExtendedProps> = ({ activeTab, selectOptions, rows, setRows, isClearing }) => {
+  let fields: TemplateConfig;
+  activeTab === 'scop' ? fields = templates.scop : fields = templates.priceList
+
+  const initialRows: Record<TemplateKey, RowData> = {
+    scop: templates.scop.fields.reduce((acc, f) => ({
+      ...acc,
+      [f.name]: f.defaultValue ?? (f.multiple ? [] : ''),
+    }), {} as IScopRow),
+    priceList: templates.priceList.fields.reduce((acc, f) => ({
+      ...acc,
+      [f.name]: f.defaultValue ?? (f.multiple ? [] : ''),
+    }), {} as IPriceListRow),
+  };
+
+  const [newRow, setNewRow] = useState<RowData>(initialRows[activeTab]);
   const [error, setError] = useState<string | undefined>();
   const [deleteRowIndex, setDeleteRowIndex] = useState<number | null>(null);
 
+  useEffect(() => {
+    setError(undefined);
+    setNewRow(initialRows[activeTab]);
+  }, [activeTab]);
+
+  function validate(tab: TemplateKey, draft: RowData) {
+    return templates[tab].fields.every(f => {
+      const v = (draft as any)[f.name];
+      return f.required
+        ? (f.multiple ? Array.isArray(v) && v.length > 0 : Boolean(v))
+        : true;
+    });
+  }
+
+  function makeRows(tab: TemplateKey, draft: RowData): RowData[] {
+    return templates[tab].makeRows(draft);
+  }
+
   const handleAddRow = () => {
-    if (
-      newRow.legal_entity_id === '' ||
-      newRow.code === '' ||
-      newRow.legal_id === '' ||
-      !newRow.maxAmountToPay||
-      !newRow.scheduledOn
-    ) {
+    setError(undefined);
+    if (!validate(activeTab, newRow)) {
       setError('Пожалуйста, заполните все обязательные поля ✏️');
       return;
     }
-
-    setRows([
-      ...rows,
-      {
-        ...newRow,
-        maxAmountToPay: newRow.maxAmountToPay * 100,
-        scheduledOn: newRow.scheduledOn
-      }
-    ]);
-    setError('');
+    const produced = makeRows(activeTab, newRow);
+    setRows((prev: RowData[]) => [...prev, ...produced]);
   };
 
   const handleClearAll = () => {
@@ -56,7 +73,7 @@ const CsvEditor: React.FC<CsvEditorProps> = ({ selectOptions }) => {
       legal_id: '',
       user_id: '',
       organization_id: '',
-      maxAmountToPay: null,
+      maxAmountToPay: 0,
       currency: 'RUB',
       scheduledOn: '',
     });
@@ -66,36 +83,55 @@ const CsvEditor: React.FC<CsvEditorProps> = ({ selectOptions }) => {
   const handleDeleteRow = (index: number) => {
     setDeleteRowIndex(index);
     setTimeout(() => {
-      setRows((prevRows) => prevRows.filter((_, i) => i !== index));
+      setRows((prevRows: RowData[]) => prevRows.filter((_, i) => i !== index));
       setDeleteRowIndex(null);
     }, 500);
   };
 
   const handleDownload = () => {
-    downloadCsv(rows)
+    const filename = activeTab === 'scop' ? 'max-amount.csv' : 'price-list.csv';
+    downloadCsv(rows, filename)
   };
 
   return (
     <div className="p-8">
       <ErrorMessage error={error} />
 
-      <Form
-        newRow={newRow}
-        {...selectOptions}
-        handleSelectChange={(option, fieldName) =>
-          setNewRow({ ...newRow, [fieldName]: option ? option.value : '' })
-        }
-        handleInputChange={(e) => {
-          const { name, min, max } = e.target;
-          let value = e.target.value;
-          value = String(Math.max(Number(min), Math.min(Number(max), Number(value))));
-          setNewRow({ ...newRow, [name]: value });
-        }}
-        handleDateChange={(date: Date | null) => {
-          const formattedDate = date ? formatDate(date) : '';
-          setNewRow({ ...newRow, scheduledOn: formattedDate });
-        }}
-      />
+      <div className="form-shell min-h-[200px] sm:min-h-30">
+        <Form
+          template={activeTab}
+          fields={templates[activeTab].fields}
+          newRow={newRow}
+          selectOptions={selectOptions}
+
+          handleSelectChange={(option, fieldName) => {
+            const value = Array.isArray(option)
+              ? option.map(o => o.value)
+              : option
+                ? option.value
+                : '';
+
+            setNewRow(prev => ({ ...prev, [fieldName]: value }));
+          }}
+
+          handleInputChange={(e) => {
+            const { name, min, max, value: inputValue } = e.target;
+            const parsed = Number(inputValue);
+
+            const clamped = Math.max(Number(min), Math.min(Number(max), parsed));
+
+            setNewRow(prev => ({
+              ...prev,
+              [name]: isNaN(clamped) ? null : clamped
+            }));
+          }}
+
+          handleDateChange={(date: Date | null) => {
+            const formattedDate = date ? formatDate(date) : '';
+            setNewRow({ ...newRow, scheduledOn: formattedDate });
+          }}
+        />
+      </div>
 
       <Buttons
         onAddRow={handleAddRow}
@@ -104,10 +140,13 @@ const CsvEditor: React.FC<CsvEditorProps> = ({ selectOptions }) => {
       />
 
       <Table
+        template={activeTab}
+        fields={templates[activeTab].fields}
         rows={rows}
-        {...selectOptions}
+        selectOptions={selectOptions}
         deleteRowIndex={deleteRowIndex}
         onDeleteRow={handleDeleteRow}
+        isClearing={isClearing}
       />
     </div>
   );

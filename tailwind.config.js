@@ -12,6 +12,36 @@ module.exports = {
         light: 300,
         medium: 500,
       },
+      colors: {
+        surface: 'var(--c-surface)',
+
+        primary: {
+          DEFAULT: 'var(--c-primary)',
+          dark: 'var(--c-primary-dark)',
+        },
+        danger: {
+          DEFAULT: 'var(--c-danger)',
+          dark: 'var(--c-danger-dark)',
+        },
+        success: {
+          DEFAULT: 'var(--c-success)',
+          dark: 'var(--c-success-dark)',
+        },
+        tab: {
+          DEFAULT: 'var(--c-tab)',
+          hover: 'var(--c-tab-hover)',
+        },
+        scroll: {
+          DEFAULT: 'var(--c-scroll)',
+          hover: 'var(--c-scroll-hover)',
+        },
+        focus: {
+          DEFAULT: 'var(--c-focus)',
+        },
+        hover: {
+          DEFAULT: 'var(--c-hover)',
+        },
+      }
     },
   },
 }

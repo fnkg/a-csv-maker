@@ -1,8 +1,4 @@
-type ButtonsProps = {
-  onAddRow: () => void;
-  onClearAll: () => void;
-  onDownload: () => void;
-};
+import type { ButtonsProps } from './types';
 
 const Buttons: React.FC<ButtonsProps> = ({ onAddRow, onClearAll, onDownload }) => {
   return (

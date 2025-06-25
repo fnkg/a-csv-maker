@@ -1,12 +1,9 @@
 import DatePicker from 'react-datepicker';
 import { ru } from 'date-fns/locale/ru';
-import 'react-datepicker/dist/react-datepicker.min.css';
-import '@/src/styles/customDatePicker.css'
 
-type DatePickerInputProps = {
-  selected: Date | null;
-  onChange: (date: Date | null ) => void;
-};
+import type { DatePickerInputProps } from './types';
+import 'react-datepicker/dist/react-datepicker.min.css';
+import '@/styles/customDatePicker.css';
 
 const DatePickerInput: React.FC<DatePickerInputProps> = ({ selected, onChange }) => {
   return (

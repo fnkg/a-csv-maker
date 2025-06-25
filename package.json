@@ -1,6 +1,6 @@
 {
   "name": "csv-maker",
-  "version": "0.4.1",
+  "version": "0.5.2",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

@@ -2,49 +2,81 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─── Fonts ─── */
 @font-face {
-  font-family: 'ApercuPro';
-  src: url('/ApercuPro-Light.woff2') format('woff2');
+  font-family: "ApercuPro";
+  src: url("/ApercuPro-Light.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'ApercuPro';
-  src: url('/ApercuPro-Medium.woff2') format('woff2');
+  font-family: "ApercuPro";
+  src: url("/ApercuPro-Medium.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
 }
 
+/* ─── Color Scheme ─── */
+:root {
+  --c-surface: #272b37;
+
+  --c-primary: #0354f1;
+  --c-primary-dark: #1e5dd9;
+
+  --c-danger: #dc2626;
+  --c-danger-dark: #b91c1c;
+
+  --c-success: #16a34a;
+  --c-success-dark: #15803d;
+
+  --c-tab: #454a55;
+  --c-tab-hover: #b4bdcf;
+
+  --c-scroll: #b5b5b5;
+  --c-scroll-hover: #878787;
+
+  --c-focus: #2684ff;
+  --c-hover: #3b82f6;
+}
+
+/* ─── Layout ─── */
 body {
   width: 80%;
   margin: auto;
 }
 
+/* ─── Table ─── */
 table {
   border-spacing: 0;
 }
 
+/* ─── Buttons ─── */
 .btn {
   @apply min-h-[40px] p-[12px] rounded-[12px] text-white;
 }
 
 .btn-primary {
-  @apply bg-[#0354f1] hover:bg-[#1e5dd9];
+  @apply bg-primary hover:bg-primary-dark;
 }
 
 .btn-danger {
-  @apply bg-red-600 hover:bg-red-700;
+  @apply bg-danger hover:bg-danger-dark;
 }
 
 .btn-success {
-  @apply bg-green-600 hover:bg-green-700;
+  @apply bg-success hover:bg-success-dark;
 }
 
-.btn-tab {
-  @apply  min-h-[40px] p-[12px] last:mr-8 rounded-[12px] text-white bg-[#454a55] hover:bg-[#b4bdcf];
+.tab {
+  @apply px-4 py-2 rounded-md text-sm font-medium transition-colors text-primary hover:bg-gray-300;
 }
 
+.tab-active {
+  @apply bg-blue-100 text-blue-900;
+}
+
+/* ─── Inputs ─── */
 .number-input {
   padding: 8px;
   line-height: 24px;
@@ -55,12 +87,12 @@ table {
 }
 
 .number-input:hover {
-  border-color: #3b82f6;
+  border-color: var(--c-hover);
 }
 
 .number-input:focus {
-  border-color: #2684ff;
-  box-shadow: 0 0 0 1px #2684ff;
+  border-color: var(--c-focus);;
+  box-shadow: 0 0 0 1px var(--c-focus);;
 }
 
 .number-input::-webkit-inner-spin-button,
@@ -69,6 +101,7 @@ table {
   margin: 0;
 }
 
+/* ─── Custom Scroll ─── */
 .custom-scroll::-webkit-scrollbar {
   height: 8px;
   width: 8px;
@@ -77,15 +110,16 @@ table {
 }
 
 .custom-scroll::-webkit-scrollbar-thumb {
-  background: #b5b5b5;
+  background: var(--c-scroll);
   border-radius: 4px;
   cursor: "pointer";
 }
 
 .custom-scroll::-webkit-scrollbar-thumb:hover {
-  background: #878787;
+  background: var(--c-scroll-hover);
 }
 
+/* ─── Animations ─── */
 .delete-row {
   animation: rotate-out 0.5s forwards;
 }
