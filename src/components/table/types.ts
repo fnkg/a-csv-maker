@@ -1,4 +1,4 @@
-import type { TemplateKey, FieldConfig, RowData, SelectOptions } from '@/helpers/types';
+import type { FieldConfig, RowData, SelectOptions, TemplateKey } from '@/helpers/types';
 
 export type TableProps = {
     template: TemplateKey;

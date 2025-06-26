@@ -3,6 +3,7 @@ import { ru } from 'date-fns/locale/ru';
 
 import type { DatePickerInputProps } from './types';
 import 'react-datepicker/dist/react-datepicker.min.css';
+import '@/styles/global.css';
 import '@/styles/customDatePicker.css';
 
 const DatePickerInput: React.FC<DatePickerInputProps> = ({ selected, onChange }) => {

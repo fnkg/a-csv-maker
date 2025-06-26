@@ -13,15 +13,16 @@ module.exports = {
         medium: 500,
       },
       colors: {
+        background: 'var(--c-background)',
         surface: 'var(--c-surface)',
 
         primary: {
           DEFAULT: 'var(--c-primary)',
           dark: 'var(--c-primary-dark)',
         },
-        danger: {
-          DEFAULT: 'var(--c-danger)',
-          dark: 'var(--c-danger-dark)',
+        clear: {
+          DEFAULT: 'var(--c-clear)',
+          dark: 'var(--c-clear-dark)',
         },
         success: {
           DEFAULT: 'var(--c-success)',

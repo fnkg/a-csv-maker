@@ -19,13 +19,14 @@
 
 /* ─── Color Scheme ─── */
 :root {
-  --c-surface: #272b37;
+  --c-background: #272b37;
+  --c-surface: #f0f0f4;
 
   --c-primary: #0354f1;
   --c-primary-dark: #1e5dd9;
 
-  --c-danger: #dc2626;
-  --c-danger-dark: #b91c1c;
+  --c-clear: #eef4ff;
+  --c-clear-dark: #c6d9ff;
 
   --c-success: #16a34a;
   --c-success-dark: #15803d;
@@ -60,12 +61,8 @@ table {
   @apply bg-primary hover:bg-primary-dark;
 }
 
-.btn-danger {
-  @apply bg-danger hover:bg-danger-dark;
-}
-
-.btn-success {
-  @apply bg-success hover:bg-success-dark;
+.btn-clear {
+  @apply bg-clear hover:bg-clear-dark text-primary;
 }
 
 .tab {
@@ -91,8 +88,8 @@ table {
 }
 
 .number-input:focus {
-  border-color: var(--c-focus);;
-  box-shadow: 0 0 0 1px var(--c-focus);;
+  border-color: var(--c-focus);
+  box-shadow: 0 0 0 1px var(--c-focus);
 }
 
 .number-input::-webkit-inner-spin-button,
@@ -118,6 +115,27 @@ table {
 .custom-scroll::-webkit-scrollbar-thumb:hover {
   background: var(--c-scroll-hover);
 }
+
+.selectScroll__menu-list::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+.selectScroll__menu-list::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 7.5px;
+}
+
+.selectScroll__menu-list::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  cursor: pointer;
+}
+
+.selectScroll__menu-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.12);
+}
+
 
 /* ─── Animations ─── */
 .delete-row {

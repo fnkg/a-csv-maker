@@ -1,12 +1,6 @@
 import Papa from 'papaparse';
 import type { IFetchOptions, SelectOption, SelectOptions, DraftRow } from './types';
-
-const currencies: SelectOption[] = [
-  { value: 'RUB', label: 'RUB' },
-  { value: 'GEL', label: 'GEL' },
-  { value: 'AED', label: 'AED' },
-  { value: 'AMD', label: 'AMD' },
-];
+import { currencies } from './constants';
 
 function byField<T>(fieldName: keyof T): (a: T, b: T) => number {
   return (a, b) => (a[fieldName] > b[fieldName] ? 1 : -1);

@@ -27,7 +27,7 @@ export const fetchFormattedOptions = async (): Promise<IFormattedOptions> => {
 
     legalClinics: legalEntities.legalEntities
       .filter((entity: { type: string; name: string }) => {
-        return entity.type === 'clinic' && entity.name.includes('Чайка') || entity.name === 'Kandinsky Clinic';
+        return entity.type === 'clinic' && entity.name.includes('Чайка');
       })
       .map((entity: { id: string; name: string }) => ({
         value: entity.id,

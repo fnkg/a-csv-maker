@@ -1,14 +1,14 @@
 export interface IFetchOptions {
-  method: string;
-  headers: Record<string, string>;
+    method: string;
+    headers: Record<string, string>;
 }
 
 export interface IFormattedOptions {
-  legalPayers: SelectOption[];
-  services: SelectOption[];
-  legalClinics: SelectOption[];
-  doctors: SelectOption[];
-  organizations: SelectOption[];
+    legalPayers: SelectOption[];
+    services: SelectOption[];
+    legalClinics: SelectOption[];
+    doctors: SelectOption[];
+    organizations: SelectOption[];
 };
 
 type WithId = { id: string };
@@ -72,7 +72,7 @@ export interface FieldConfig {
     multiple?: boolean;
     component: 'Select' | 'AsyncSelect' | 'NumberInput' | 'DatePicker';
     optionsKey?: keyof SelectOptions;
-    defaultValue?: string | number;
+    defaultValue?: string | number | Array<string | number>;
     placeholder?: string;
 }
 

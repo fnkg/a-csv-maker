@@ -32,6 +32,9 @@ const BasicSelect: React.FC<IBasicSelectProps> = ({
 
   return (
     <Select<SelectOption, typeof isMulti>
+      className={className}
+      classNamePrefix="selectScroll"
+      menuPosition="fixed"
       instanceId="basicSelect"
       isMulti={isMulti}
       options={options}
@@ -40,7 +43,6 @@ const BasicSelect: React.FC<IBasicSelectProps> = ({
       placeholder={placeholder}
       isDisabled={isDisabled}
       isClearable={isClearable}
-      className={className}
       styles={selectStyles as StylesConfig<SelectOption, typeof isMulti>}
     />
   );

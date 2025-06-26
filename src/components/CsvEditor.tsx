@@ -1,13 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-import Buttons from './ui/Buttons';
-import ErrorMessage from './ui/ErrorMessage';
+import Buttons from '@/ui/Buttons';
+import ErrorMessage from '@/ui/ErrorMessage';
 import Form from '@/components/form';
 import Table from '@/components/table';
 
-import type { CsvEditorProps, TemplateKey, TemplateConfig, IScopRow, IPriceListRow, RowData } from '@/helpers/types';
+import type { CsvEditorProps, IScopRow, IPriceListRow, RowData, TemplateConfig, TemplateKey } from '@/helpers/types';
 import { templates } from '@/helpers/templates';
 import { downloadCsv, formatDate } from '@/helpers/utils';
 
@@ -97,7 +97,7 @@ const CsvEditor: React.FC<ExtendedProps> = ({ activeTab, selectOptions, rows, se
     <div className="p-8">
       <ErrorMessage error={error} />
 
-      <div className="form-shell min-h-[200px] sm:min-h-30">
+      <div className="min-h-[200px] sm:min-h-30">
         <Form
           template={activeTab}
           fields={templates[activeTab].fields}

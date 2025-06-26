@@ -1,5 +1,5 @@
-import type { TemplateKey, FieldConfig, DraftRow, SelectOption, SelectOptions } from '@/helpers/types';
 import type { ActionMeta } from 'react-select';
+import type { DraftRow, FieldConfig, SelectOption, SelectOptions, TemplateKey } from '@/helpers/types';
 
 interface IBaseSelectProps {
   className?: string;

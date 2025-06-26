@@ -15,7 +15,7 @@ export default function Table({
       <div className={`overflow-x-auto max-h-[50vh] custom-scroll rounded-[12px] bg-white transition-opacity duration-300 ${isClearing ? 'opacity-0' : 'opacity-100'}`}>
 
         <table className="w-full bg-white border-gray-300 border-separate table-fixed">
-          <thead className="sticky top-0 z-10">
+          <thead className="sticky top-0 z-9">
             <tr className="bg-gray-50 text-gray-700 text-sm *:font-bold font-mono">
               {fields.map((f) => (
                 <th className="p-2 md:p-3 border-r border-b border-gray-200 text-left w-[140px]" key={f.name}>
@@ -23,7 +23,7 @@ export default function Table({
                 </th>
               ))}
               <th
-                className="p-2 md:p-3 border-b border-gray-200 text-center w-[80px] text-xs font-semibold"
+                className="p-2 md:p-3 border-b border-gray-200 text-center w-[80px] text-sm font-semibold"
               >
                 Действия
               </th>
@@ -55,10 +55,9 @@ export default function Table({
                   <div className="flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                     <button
                       onClick={() => onDeleteRow(index)}
-                      className="text-danger hover:text-danger-dark focus:outline-none"
-                      title="Удалить"
+                      className="text-red hover:text-red focus:outline-none"
                     >
-                      🗑
+                      Удалить
                     </button>
                   </div>
                 </td>

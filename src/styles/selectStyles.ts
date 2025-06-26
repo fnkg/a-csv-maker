@@ -1,41 +1,35 @@
+const themeColors = {
+  primary: '#3b82f6',
+  primaryLight: '#eef4ff',
+  primaryDark: '#0354f1',
+  hoverBg: '#c6d9ff',
+  textPrimary: '#0e0d47',
+  textGray: '#9ca3af',
+  textDark: '#1f2937',
+  grayLight: '#cccccc',
+};
+
 export const selectStyles = {
   menu: (base: React.CSSProperties) => ({
     ...base,
     borderRadius: '16px',
     marginTop: '0.4rem',
-    zIndex: '11'
+    zIndex: 11,
   }),
 
   menuList: (base: React.CSSProperties) => ({
     ...base,
     borderRadius: '16px',
-    paddingTop: '0px',
-    paddingBottom: '0px',
-    '::-webkit-scrollbar': {
-      width: '12px',
-      height: '12px',
-      zIndex: '-100',
-    },
-    '::-webkit-scrollbar-track': {
-      background: 'tranparent',
-      margin: '7.5px',
-    },
-    '::-webkit-scrollbar-thumb': {
-      background: 'rgba(0, 0, 0, 0.08)',
-      borderRadius: '16px',
-      cursor: 'pointer',
-    },
-    '::-webkit-scrollbar-thumb:hover': {
-      background: 'rgba(0, 0, 0, 0.08)',
-    },
+    paddingTop: 0,
+    paddingBottom: 0,
   }),
 
   option: (defaultStyles: React.CSSProperties, state: { isSelected: boolean }) => ({
     ...defaultStyles,
-    color: state.isSelected ? 'rgb(14, 13, 71)' : 'rgb(14, 13, 71)',
-    backgroundColor: state.isSelected ? '#eef4ff' : 'white',
+    color: themeColors.textPrimary,
+    backgroundColor: state.isSelected ? themeColors.primaryLight : 'white',
     ':hover': {
-      backgroundColor: '#eef4ff',
+      backgroundColor: themeColors.primaryLight,
     },
     padding: '10px',
     fontFamily: 'ApercuPro, sans-serif',
@@ -46,32 +40,60 @@ export const selectStyles = {
 
   control: (defaultStyles: React.CSSProperties) => ({
     ...defaultStyles,
-    // backgroundColor: 'white',
     borderRadius: '12px',
     ':hover': {
-      borderColor: '#3b82f6',
+      borderColor: themeColors.primary,
     },
     padding: '2px',
     minHeight: '40px',
   }),
 
+  valueContainer: (base: React.CSSProperties) => ({
+    ...base,
+    maxHeight: '80px',
+    overflowY: 'auto',
+    paddingRight: '8px',
+    scrollbarWidth: 'thin',
+  }),
+
   singleValue: (defaultStyles: React.CSSProperties) => ({
     ...defaultStyles,
-    color: '#1f2937',
+    color: themeColors.textDark,
+  }),
+
+  multiValue: (defaultStyles: React.CSSProperties) => ({
+    ...defaultStyles,
+    backgroundColor: themeColors.primaryLight,
+  }),
+
+  multiValueLabel: (defaultStyles: React.CSSProperties) => ({
+    ...defaultStyles,
+    color: themeColors.textPrimary,
+  }),
+
+  multiValueRemove: (defaultStyles: React.CSSProperties) => ({
+    ...defaultStyles,
+    color: themeColors.primaryDark,
+    fontSize: '18px',
+    padding: '0 4px',
+    ':hover': {
+      backgroundColor: themeColors.hoverBg,
+      color: themeColors.primaryDark,
+    },
   }),
 
   placeholder: (defaultStyles: React.CSSProperties) => ({
     ...defaultStyles,
-    color: '#9ca3af',
+    color: themeColors.textGray,
     fontFamily: 'ApercuPro, sans-serif',
     fontWeight: 300,
   }),
 
   dropdownIndicator: (defaultStyles: React.CSSProperties, state: { isDisabled: boolean }) => ({
     ...defaultStyles,
-    color: state.isDisabled ? '#9ca3af' : '#3b82f6',
+    color: state.isDisabled ? themeColors.textGray : themeColors.primary,
     ':hover': {
-      color: '#3b82f6',
+      color: themeColors.primary,
       cursor: 'pointer',
     },
   }),
@@ -82,9 +104,9 @@ export const selectStyles = {
 
   clearIndicator: (defaultStyles: React.CSSProperties) => ({
     ...defaultStyles,
-    color: '#cccccc',
+    color: themeColors.grayLight,
     ':hover': {
-      color: '#0e0d47'
+      color: themeColors.textPrimary,
     },
   }),
 };

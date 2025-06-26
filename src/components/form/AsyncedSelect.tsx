@@ -1,10 +1,10 @@
 import React from 'react';
 import AsyncSelect from 'react-select/async';
 import {
-  StylesConfig,
   ActionMeta,
   MultiValue,
   SingleValue,
+  StylesConfig,
 } from 'react-select';
 
 import type { IAsyncedSelectProps } from './types'
@@ -39,6 +39,8 @@ const AsyncedSelect: React.FC<IAsyncedSelectProps> = React.memo(
       <AsyncSelect<SelectOption, typeof isMulti>
         loadOptions={loadOptions}
         className={className}
+        classNamePrefix="selectScroll"
+        menuPosition="fixed"
         placeholder={placeholder}
         value={value as any}
         isDisabled={isDisabled}
